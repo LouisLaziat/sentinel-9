@@ -6,9 +6,15 @@ SENTINEL//9 is a cinematic frontend experience set inside a cyberpunk city. The 
 
 ## Current delivery
 
-**Delivery 02 — Cinematic network entry**
+**Delivery 03 — Command center shell**
 
 - React and strict TypeScript application powered by Vite
+- Responsive three-workspace command shell for situation, signals, and systems
+- Animated network topology with drone, ground-unit, and relay telemetry
+- Actionable signal queue with acknowledgement state and live alert counts
+- Persistent operator preferences stored locally in the browser
+- Live operational clock, district health, operator identity, and system status
+- Animated signal treatment for the hero word “Decisions”
 - Five-stage autonomous network boot sequence with live progress telemetry
 - Animated cyberpunk skyline, defense drones, targeting lattice, and city uplinks
 - Cinematic handoff from system initialization into the interface
@@ -23,7 +29,7 @@ SENTINEL//9 is a cinematic frontend experience set inside a cyberpunk city. The 
 - Automated GitHub Pages deployment
 - Keyboard focus, semantic landmarks, skip navigation, and reduced-motion support
 
-The component rules and usage guidance are documented in [`docs/design-system.md`](docs/design-system.md).
+The component rules and usage guidance are documented in [`docs/design-system.md`](docs/design-system.md). Command-shell behavior is documented in [`docs/command-center.md`](docs/command-center.md).
 
 ## Run locally
 
@@ -73,4 +79,4 @@ Pushes to `main` are checked by CI and deployed through the Pages workflow. Vite
 
 ---
 
-`SENTINEL NETWORK // BUILD 00.02.00`
+`SENTINEL NETWORK // BUILD 00.03.00`

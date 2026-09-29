@@ -58,15 +58,34 @@ main {
   text-shadow: 0 0 30px rgb(88 232 255 / 8%);
 }
 
+.hero-section h1 .hero-title__signal {
+  isolation: isolate;
+}
+
+.hero-section h1 .hero-title__signal::before {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: var(--color-cyan);
+  content: attr(data-text);
+  opacity: 0;
+  -webkit-text-stroke: 0;
+  text-shadow: 0 0 20px rgb(88 232 255 / 55%);
+  clip-path: inset(0 100% 0 0);
+  animation: decision-scan 3.2s var(--ease-system) 0.35s infinite;
+}
+
 .hero-section h1 span::after {
   position: absolute;
-  right: 0;
+  left: 0;
   bottom: -0.08em;
   width: 28%;
   height: 0.06em;
   content: "";
-  background: var(--color-cyan);
-  box-shadow: var(--glow-cyan);
+  background: linear-gradient(90deg, var(--color-cyan), var(--color-lime), var(--color-violet));
+  box-shadow: 0 0 16px rgb(88 232 255 / 55%);
+  transform-origin: left;
+  animation: decision-underline 3.2s var(--ease-system) 0.35s infinite;
 }
 
 .hero-section__lede {
@@ -266,8 +285,10 @@ main {
 .motion-demo--escalate i:nth-child(2) { height: 3.5rem; animation-delay: -300ms; }
 .motion-demo--escalate i:nth-child(3) { height: 2.6rem; animation-delay: -600ms; }
 
-.site-footer { display: grid; grid-template-columns: 1fr auto auto; gap: 2rem; align-items: center; min-height: 8rem; border-top: 1px solid var(--line-default); color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.site-footer { display: grid; grid-template-columns: 1fr auto auto auto; gap: 2rem; align-items: center; min-height: 8rem; border-top: 1px solid var(--line-default); color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .site-footer p { margin: 0; }
+.site-footer__author { display: inline-flex; gap: 0.45rem; align-items: center; white-space: nowrap; }
+.site-footer__author strong { color: var(--color-lime); font-weight: 600; }
 
 @keyframes content-reveal { from { opacity: 0; transform: translateY(1.5rem); } to { opacity: 1; transform: translateY(0); } }
 @keyframes orbit-spin { to { transform: rotate(360deg); } }
@@ -275,3 +296,16 @@ main {
 @keyframes acquire { 0%, 15% { transform: translateX(0); } 70%, 100% { transform: translateX(15rem); } }
 @keyframes confirm { 0% { opacity: 1; transform: scale(0.3); } 80%, 100% { opacity: 0; transform: scale(2.8); } }
 @keyframes escalate { 50% { opacity: 0.3; transform: scaleY(0.45); } }
+@keyframes decision-scan {
+  0%, 54%, 100% { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-0.05em); }
+  58% { opacity: 0.68; clip-path: inset(0 74% 0 0); }
+  69% { opacity: 0.88; clip-path: inset(0 6% 0 0); transform: translateX(0); }
+  76% { opacity: 0.5; clip-path: inset(0 0 0 72%); transform: translateX(0.03em); }
+  80% { opacity: 0; clip-path: inset(0 0 0 100%); }
+}
+@keyframes decision-underline {
+  0%, 48%, 100% { opacity: 0.5; transform: translateX(0) scaleX(0.7); }
+  56% { opacity: 1; transform: translateX(0) scaleX(1); }
+  72% { opacity: 0.95; transform: translateX(250%) scaleX(0.72); }
+  80% { opacity: 0.5; transform: translateX(0) scaleX(0.7); }
+}

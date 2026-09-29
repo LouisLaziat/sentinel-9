@@ -3,5 +3,6 @@
 @import './styles/environment.css';
 @import './styles/boot.css';
 @import './styles/components.css';
+@import './styles/command.css';
 @import './styles/page.css';
 @import './styles/responsive.css';

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { CommandCenter } from './components/command/CommandCenter'
 import { BootSequence } from './components/system/BootSequence'
 import { CursorGlow } from './components/system/CursorGlow'
 import { Environment } from './components/system/Environment'
@@ -77,16 +78,16 @@ export function App() {
           <div className="hero-section__copy">
             <div className="protocol-label">
               <span>Interface protocol</span>
-              <strong>01 / Visual language</strong>
+              <strong>03 / Command shell</strong>
             </div>
-            <h1 id="hero-title">Designed for <span>decisions</span> at machine speed.</h1>
+            <h1 id="hero-title">Designed for <span className="hero-title__signal" data-text="decisions">decisions</span> at machine speed.</h1>
             <p className="hero-section__lede">
               A precision interface system for the operators, machines, and
               autonomous agents protecting tomorrow&apos;s megacities.
             </p>
             <div className="hero-section__actions">
-              <Button href="#primitives" icon={<ArrowUpRightIcon />}>Explore the system</Button>
-              <Button href="#modules" variant="secondary">View modules</Button>
+              <Button href="#command" icon={<ArrowUpRightIcon />}>Enter command center</Button>
+              <Button href="#primitives" variant="secondary">View system</Button>
             </div>
             <div className="hero-section__footnote">
               <span>S9–DS / REV.01</span>
@@ -114,8 +115,13 @@ export function App() {
           {telemetry.map((item) => <TelemetryCard key={item.label} {...item} />)}
         </section>
 
+        <section className="page-section system-section command-section" id="command" aria-labelledby="command-title">
+          <SectionHeading description="A responsive operational shell unifies live situational awareness, signal triage, and persistent operator preferences." id="command-title" index="02" title="Command center" />
+          <CommandCenter />
+        </section>
+
         <section className="page-section system-section" id="primitives" aria-labelledby="primitives-title">
-          <SectionHeading description="A restrained signal palette and sharply defined hierarchy keep dense information readable under pressure." id="primitives-title" index="02" title="Visual primitives" />
+          <SectionHeading description="A restrained signal palette and sharply defined hierarchy keep dense information readable under pressure." id="primitives-title" index="03" title="Visual primitives" />
 
           <div className="primitive-grid">
             <HudPanel eyebrow="Palette / Signal states" meta="5 tokens" title="Color protocol">
@@ -160,7 +166,7 @@ export function App() {
         </section>
 
         <section className="page-section system-section" id="modules" aria-labelledby="modules-title">
-          <SectionHeading description="Composable panels turn the visual system into a believable command surface ready for live simulation data." id="modules-title" index="03" title="Interface modules" />
+          <SectionHeading description="Composable panels turn the visual system into a believable command surface ready for live simulation data." id="modules-title" index="04" title="Interface modules" />
 
           <div className="module-grid">
             <HudPanel className="alert-module" eyebrow="Network events" meta="3 open" title="Signal queue" tone="warning">
@@ -199,7 +205,7 @@ export function App() {
         </section>
 
         <section className="page-section system-section motion-section" id="motion" aria-labelledby="motion-title">
-          <SectionHeading description="Motion communicates system state. It stays purposeful, interruptible, and fully removable when reduced motion is requested." id="motion-title" index="04" title="Motion language" />
+          <SectionHeading description="Motion communicates system state. It stays purposeful, interruptible, and fully removable when reduced motion is requested." id="motion-title" index="05" title="Motion language" />
 
           <div className="motion-grid">
             <article className="motion-card"><span className="motion-card__index">01</span><div className="motion-demo motion-demo--acquire"><i /></div><h3>Acquire</h3><p>Fast linear movement signals detection and targeting.</p></article>
@@ -214,8 +220,9 @@ export function App() {
           <span className="navigation__mark" aria-hidden="true"><span>S</span><i>9</i></span>
           <span className="navigation__wordmark">SENTINEL<i>//9</i></span>
         </div>
-        <p>Cinematic network entry / Delivery 02</p>
-        <span>BUILD 00.02.00</span>
+        <p>Command center shell / Delivery 03</p>
+        <span className="site-footer__author">Created by <strong>Louis Ho</strong></span>
+        <span className="site-footer__build">BUILD 00.03.00</span>
       </footer>
       </div>
     </>

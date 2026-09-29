@@ -99,3 +99,40 @@ export function ReplayIcon(props: IconProps) {
     </IconBase>
   )
 }
+
+export function BellIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M6.5 10.2a5.5 5.5 0 0 1 11 0v3.1l1.8 2.7H4.7l1.8-2.7v-3.1Z" stroke="currentColor" strokeLinejoin="bevel" strokeWidth="1.4" />
+      <path d="M9.7 18.5a2.5 2.5 0 0 0 4.6 0" stroke="currentColor" strokeWidth="1.4" />
+    </IconBase>
+  )
+}
+
+export function SettingsIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6" stroke="currentColor" strokeWidth="1.4" />
+    </IconBase>
+  )
+}
+
+export function DroneIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M3 8h4l2.2 2h5.6L17 8h4M5 8 3.7 5.8M19 8l1.3-2.2M8.5 13.5h7M10 10v6h4v-6" stroke="currentColor" strokeLinejoin="bevel" strokeWidth="1.3" />
+      <circle cx="3" cy="5" r="1.5" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="21" cy="5" r="1.5" stroke="currentColor" strokeWidth="1.2" />
+    </IconBase>
+  )
+}
+
+export function RobotIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M7 7.5h10v8H7v-8ZM9 15.5v3M15 15.5v3M12 7.5V4.8M10 4.8h4M4.5 10v3M19.5 10v3" stroke="currentColor" strokeLinejoin="bevel" strokeWidth="1.3" />
+      <path d="M9.5 10.5h.1M14.4 10.5h.1" stroke="currentColor" strokeLinecap="square" strokeWidth="2" />
+    </IconBase>
+  )
+}

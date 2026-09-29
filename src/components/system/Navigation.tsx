@@ -4,9 +4,10 @@ import { StatusBadge } from '../ui/StatusBadge'
 
 const navItems = [
   { href: '#overview', label: 'Overview', index: '01' },
-  { href: '#primitives', label: 'Primitives', index: '02' },
-  { href: '#modules', label: 'Modules', index: '03' },
-  { href: '#motion', label: 'Motion', index: '04' },
+  { href: '#command', label: 'Command', index: '02' },
+  { href: '#primitives', label: 'Primitives', index: '03' },
+  { href: '#modules', label: 'Modules', index: '04' },
+  { href: '#motion', label: 'Motion', index: '05' },
 ]
 
 type NavigationProps = {

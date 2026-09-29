@@ -26,6 +26,28 @@
   .preference-list label:first-child {
     border-top: 1px solid var(--line-quiet);
   }
+
+  .site-footer {
+    grid-template-columns: 1fr auto;
+    row-gap: 0.8rem;
+    padding-block: 1.6rem;
+  }
+
+  .site-footer p {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .site-footer__author {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .site-footer__build {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: right;
+  }
 }
 
 @media (max-width: 900px) {
@@ -273,8 +295,20 @@
   }
 
   .site-footer p {
+    grid-column: auto;
+    grid-row: auto;
     order: 2;
   }
+
+  .site-footer__author,
+  .site-footer__build {
+    grid-column: auto;
+    grid-row: auto;
+    text-align: left;
+  }
+
+  .site-footer__author { order: 3; }
+  .site-footer__build { order: 4; }
 }
 
 @media (max-width: 410px) {
