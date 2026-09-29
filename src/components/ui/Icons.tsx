@@ -136,3 +136,28 @@ export function RobotIcon(props: IconProps) {
     </IconBase>
   )
 }
+
+export function MapIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="m3.5 6 5-2.5 7 2.5 5-2.5V18l-5 2.5-7-2.5-5 2.5V6Z" stroke="currentColor" strokeLinejoin="bevel" strokeWidth="1.3" />
+      <path d="M8.5 3.5V18M15.5 6v14.5" stroke="currentColor" strokeWidth="1.3" />
+    </IconBase>
+  )
+}
+
+export function PlusIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.5" />
+    </IconBase>
+  )
+}
+
+export function MinusIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" />
+    </IconBase>
+  )
+}

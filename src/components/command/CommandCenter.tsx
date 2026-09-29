@@ -5,14 +5,16 @@ import {
   BoltIcon,
   DroneIcon,
   GridIcon,
+  MapIcon,
   RadarIcon,
   RobotIcon,
   SettingsIcon,
   ShieldIcon,
 } from '../ui/Icons'
 import { StatusBadge } from '../ui/StatusBadge'
+import { OperationsMap } from './OperationsMap'
 
-type Workspace = 'situation' | 'signals' | 'systems'
+type Workspace = 'operations' | 'situation' | 'signals' | 'systems'
 
 type Preferences = {
   environmentalMotion: boolean
@@ -30,6 +32,7 @@ type Alert = {
 }
 
 const workspaceItems = [
+  { id: 'operations' as const, label: 'Operations', icon: <MapIcon /> },
   { id: 'situation' as const, label: 'Situation', icon: <RadarIcon /> },
   { id: 'signals' as const, label: 'Signals', icon: <BellIcon /> },
   { id: 'systems' as const, label: 'Systems', icon: <SettingsIcon /> },
@@ -246,7 +249,7 @@ function SystemsWorkspace({ preferences, onToggle }: { preferences: Preferences;
 }
 
 export function CommandCenter() {
-  const [workspace, setWorkspace] = useState<Workspace>('situation')
+  const [workspace, setWorkspace] = useState<Workspace>('operations')
   const [acknowledged, setAcknowledged] = useState<string[]>([])
   const [preferences, setPreferences] = useState<Preferences>(loadPreferences)
   const [clock, setClock] = useState(() => new Date())
@@ -278,7 +281,7 @@ export function CommandCenter() {
   return (
     <div className={`command-shell${preferences.environmentalMotion ? '' : ' command-shell--calm'}${preferences.tacticalContrast ? ' command-shell--contrast' : ''}`}>
       <aside className="command-sidebar">
-        <div className="command-sidebar__brand"><span>S9</span><div><strong>COMMAND</strong><small>CORE / 03</small></div></div>
+        <div className="command-sidebar__brand"><span>S9</span><div><strong>COMMAND</strong><small>CORE / 04</small></div></div>
         <nav aria-label="Command center workspaces">
           {workspaceItems.map((item, index) => (
             <button aria-current={workspace === item.id ? 'page' : undefined} className={workspace === item.id ? 'is-active' : ''} key={item.id} onClick={() => setWorkspace(item.id)} type="button">
@@ -301,6 +304,7 @@ export function CommandCenter() {
         </header>
 
         <div className="command-console__viewport" key={workspace}>
+          {workspace === 'operations' && <OperationsMap />}
           {workspace === 'situation' && <SituationWorkspace openAlerts={openAlerts} />}
           {workspace === 'signals' && <SignalsWorkspace acknowledged={acknowledged} onAcknowledge={acknowledgeAlert} />}
           {workspace === 'systems' && <SystemsWorkspace preferences={preferences} onToggle={togglePreference} />}
@@ -310,7 +314,7 @@ export function CommandCenter() {
           <span><i />S9 CORE CONNECTED</span>
           <span>UPLINK 2.8 GB/S</span>
           <span>ENCRYPTION AES-512</span>
-          <strong>BUILD 00.03.00</strong>
+          <strong>BUILD 00.04.00</strong>
         </footer>
       </div>
     </div>

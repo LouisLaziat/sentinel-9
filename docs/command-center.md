@@ -1,8 +1,15 @@
 # Command center shell
 
-Delivery 03 turns the SENTINEL//9 design language into an interactive application shell. It deliberately stops short of the complete city map and simulation engine planned for later deliveries.
+Delivery 03 turned the SENTINEL//9 design language into an interactive application shell. Delivery 04 adds the Operations workspace while preserving the shell's navigation, alerts, and operator preferences.
 
 ## Workspaces
+
+### Operations
+
+- Interactive city map with selectable districts
+- Drone, ground-unit, route, and threat overlays
+- Filter, zoom, tracking, and contextual inspection controls
+- Full interaction details are documented in [`operations-grid.md`](operations-grid.md)
 
 ### Situation
 
@@ -36,4 +43,4 @@ Delivery 03 turns the SENTINEL//9 design language into an interactive applicatio
 
 ## Delivery boundary
 
-The topology in this delivery communicates application structure and system state. Delivery 04 will replace it with the interactive city operations grid, district selection, and detailed unit positioning.
+The original Situation topology remains available as a system-wide summary. The Operations workspace now provides detailed city positioning and selection; a deterministic simulation and unit dispatch workflow remain planned for later deliveries.
