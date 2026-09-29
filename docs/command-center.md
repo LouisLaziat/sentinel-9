@@ -11,6 +11,14 @@ Delivery 03 turned the SENTINEL//9 design language into an interactive applicati
 - Filter, zoom, tracking, and contextual inspection controls
 - Full interaction details are documented in [`operations-grid.md`](operations-grid.md)
 
+### Fleet
+
+- Selectable drone and ground-unit manifest
+- Animated hangar inspection with blueprint mode
+- Equipment configuration and calculated performance telemetry
+- Local deployment staging and service-lock states
+- Full interaction details are documented in [`fleet-systems.md`](fleet-systems.md)
+
 ### Situation
 
 - Live fleet, sector, alert, and response telemetry
@@ -43,4 +51,4 @@ Delivery 03 turned the SENTINEL//9 design language into an interactive applicati
 
 ## Delivery boundary
 
-The original Situation topology remains available as a system-wide summary. The Operations workspace now provides detailed city positioning and selection; a deterministic simulation and unit dispatch workflow remain planned for later deliveries.
+The original Situation topology remains available as a system-wide summary. Operations provides detailed city positioning, while Fleet provides frame inspection and configuration. A deterministic simulation and real unit dispatch workflow remain planned for later deliveries.

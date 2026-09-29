@@ -161,3 +161,19 @@ export function MinusIcon(props: IconProps) {
     </IconBase>
   )
 }
+
+export function HangarIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M3.5 20V8.5L12 3l8.5 5.5V20M7 20v-8h10v8M9.5 15h5" stroke="currentColor" strokeLinejoin="bevel" strokeWidth="1.3" />
+    </IconBase>
+  )
+}
+
+export function WrenchIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M14.8 6.8a4.5 4.5 0 0 0-5.7 5.7L3.7 18l2.3 2.3 5.5-5.4a4.5 4.5 0 0 0 5.7-5.7l-2.6 2.6-2.4-.5-.5-2.4 3.1-2.1Z" stroke="currentColor" strokeLinejoin="bevel" strokeWidth="1.3" />
+    </IconBase>
+  )
+}
