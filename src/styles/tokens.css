@@ -1,0 +1,66 @@
+:root {
+  color-scheme: dark;
+
+  /* Core palette */
+  --color-field-950: #030508;
+  --color-field-900: #06090d;
+  --color-field-850: #0a0f14;
+  --color-field-800: #0d141a;
+  --color-field-700: #142029;
+  --color-ink-100: #f1f8f7;
+  --color-ink-200: #c7d2d0;
+  --color-ink-400: #85928f;
+  --color-ink-500: #62706d;
+  --color-lime: #a3ff12;
+  --color-lime-soft: #c5ff6b;
+  --color-cyan: #58e8ff;
+  --color-violet: #9b7bff;
+  --color-warning: #ffbd5a;
+  --color-critical: #ff5e6c;
+
+  /* Transparent UI colors */
+  --surface-quiet: rgb(10 15 20 / 74%);
+  --surface-raised: rgb(13 20 26 / 92%);
+  --line-quiet: rgb(199 210 208 / 10%);
+  --line-default: rgb(199 210 208 / 17%);
+  --line-strong: rgb(88 232 255 / 34%);
+  --glow-lime: 0 0 24px rgb(163 255 18 / 22%);
+  --glow-cyan: 0 0 28px rgb(88 232 255 / 18%);
+  --shadow-panel: 0 24px 80px rgb(0 0 0 / 34%);
+
+  /* Typography */
+  --font-display: "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --font-interface: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-data: "Cascadia Code", "SFMono-Regular", Consolas, ui-monospace, monospace;
+  --text-2xs: 0.625rem;
+  --text-xs: 0.72rem;
+  --text-sm: 0.82rem;
+  --text-md: 1rem;
+  --text-lg: 1.2rem;
+  --text-xl: clamp(1.85rem, 3vw, 2.8rem);
+  --text-display: clamp(3.65rem, 8vw, 7.6rem);
+
+  /* Space and geometry */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --page-gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --page-width: 90rem;
+  --cut-sm: 8px;
+  --cut-md: 14px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-system: cubic-bezier(0.22, 0.8, 0.24, 1);
+  --duration-fast: 140ms;
+  --duration-default: 280ms;
+  --duration-reveal: 720ms;
+
+  --pointer-x: 72vw;
+  --pointer-y: 24vh;
+}
