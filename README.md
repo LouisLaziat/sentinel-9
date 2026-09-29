@@ -6,9 +6,14 @@ SENTINEL//9 is a cinematic frontend experience set inside a cyberpunk city. The 
 
 ## Current delivery
 
-**Delivery 01 — Brand and design system**
+**Delivery 02 — Cinematic network entry**
 
 - React and strict TypeScript application powered by Vite
+- Five-stage autonomous network boot sequence with live progress telemetry
+- Animated cyberpunk skyline, defense drones, targeting lattice, and city uplinks
+- Cinematic handoff from system initialization into the interface
+- Skippable sequence with keyboard support and an in-app replay control
+- Reduced-motion behavior that preserves the narrative without prolonged animation
 - Complete color, typography, spacing, geometry, and motion tokens
 - Reusable buttons, HUD panels, status badges, telemetry cards, tooltips, and loaders
 - Responsive navigation and design-system showcase
@@ -68,4 +73,4 @@ Pushes to `main` are checked by CI and deployed through the Pages workflow. Vite
 
 ---
 
-`SENTINEL NETWORK // BUILD 00.01.00`
+`SENTINEL NETWORK // BUILD 00.02.00`

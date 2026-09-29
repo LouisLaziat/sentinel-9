@@ -80,6 +80,12 @@
     border-bottom: 0;
   }
 
+  .navigation__replay {
+    justify-content: center;
+    min-height: 2.8rem;
+    margin-top: 0.65rem;
+  }
+
   .hero-section {
     grid-template-columns: 1fr;
     min-height: auto;

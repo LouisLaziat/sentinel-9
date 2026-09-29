@@ -91,3 +91,11 @@ export function ShieldIcon(props: IconProps) {
     </IconBase>
   )
 }
+
+export function ReplayIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M19 8.5V4m0 0h-4.5M19 4l-3.2 3.2a6.7 6.7 0 1 0 1.1 8" stroke="currentColor" strokeLinecap="square" strokeWidth="1.4" />
+    </IconBase>
+  )
+}

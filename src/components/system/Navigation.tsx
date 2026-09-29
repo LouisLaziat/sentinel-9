@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CloseIcon, MenuIcon } from '../ui/Icons'
+import { CloseIcon, MenuIcon, ReplayIcon } from '../ui/Icons'
 import { StatusBadge } from '../ui/StatusBadge'
 
 const navItems = [
@@ -9,7 +9,11 @@ const navItems = [
   { href: '#motion', label: 'Motion', index: '04' },
 ]
 
-export function Navigation() {
+type NavigationProps = {
+  onReplay: () => void
+}
+
+export function Navigation({ onReplay }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   function closeMenu() {
@@ -51,6 +55,17 @@ export function Navigation() {
             {item.label}
           </a>
         ))}
+        <button
+          className="navigation__replay"
+          onClick={() => {
+            closeMenu()
+            onReplay()
+          }}
+          type="button"
+        >
+          <ReplayIcon />
+          Reboot
+        </button>
       </nav>
 
       <div className="navigation__status">

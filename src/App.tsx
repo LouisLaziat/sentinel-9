@@ -1,3 +1,5 @@
+import { useCallback, useState } from 'react'
+import { BootSequence } from './components/system/BootSequence'
 import { CursorGlow } from './components/system/CursorGlow'
 import { Environment } from './components/system/Environment'
 import { Navigation } from './components/system/Navigation'
@@ -49,12 +51,26 @@ function SignalBars() {
 }
 
 export function App() {
+  const [isBooting, setIsBooting] = useState(true)
+
+  const completeBoot = useCallback(() => {
+    setIsBooting(false)
+  }, [])
+
+  const replayBoot = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+    setIsBooting(true)
+  }, [])
+
   return (
-    <div className="app-shell">
+    <>
+      {isBooting && <BootSequence onComplete={completeBoot} />}
+
+      <div className="app-shell" aria-hidden={isBooting} inert={isBooting}>
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <Environment />
       <CursorGlow />
-      <Navigation />
+      <Navigation onReplay={replayBoot} />
 
       <main id="main-content">
         <section className="hero-section page-section" id="overview" aria-labelledby="hero-title">
@@ -198,9 +214,10 @@ export function App() {
           <span className="navigation__mark" aria-hidden="true"><span>S</span><i>9</i></span>
           <span className="navigation__wordmark">SENTINEL<i>//9</i></span>
         </div>
-        <p>Interface design system / Delivery 01</p>
-        <span>BUILD 00.01.00</span>
+        <p>Cinematic network entry / Delivery 02</p>
+        <span>BUILD 00.02.00</span>
       </footer>
-    </div>
+      </div>
+    </>
   )
 }
