@@ -186,3 +186,15 @@ export function PulseIcon(props: IconProps) {
     </IconBase>
   )
 }
+
+export function SearchIcon(props: IconProps) {
+  return <IconBase {...props}><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" strokeWidth="1.4" /><path d="m15.5 15.5 5 5" stroke="currentColor" strokeWidth="1.4" /></IconBase>
+}
+
+export function CommandIcon(props: IconProps) {
+  return <IconBase {...props}><path d="M8 8h8v8H8V8ZM8 8H5a3 3 0 1 1 3-3v3Zm8 0V5a3 3 0 1 1 3 3h-3Zm0 8h3a3 3 0 1 1-3 3v-3Zm-8 0v3a3 3 0 1 1-3-3h3Z" stroke="currentColor" strokeWidth="1.3" /></IconBase>
+}
+
+export function LinkIcon(props: IconProps) {
+  return <IconBase {...props}><path d="m9 15 6-6M9 7l1-1a4.2 4.2 0 0 1 6 6l-2 2M15 17l-1 1a4.2 4.2 0 0 1-6-6l2-2" stroke="currentColor" strokeWidth="1.4" /></IconBase>
+}

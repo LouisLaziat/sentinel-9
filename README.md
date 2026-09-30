@@ -6,9 +6,16 @@ SENTINEL//9 is a cinematic frontend experience set inside a cyberpunk city. The 
 
 ## Current delivery
 
-**Delivery 06 — Threat simulation**
+**Delivery 07 — Command system**
 
 - React and strict TypeScript application powered by Vite
+- Searchable cyberpunk command palette with 32 contextual commands
+- Direct access to workspaces, district inspectors, unit tracking, fleet frames, and threat scenarios
+- Keyboard navigation, category filters, shortcut guide, and accessible modal focus handling
+- Ctrl/⌘+K and slash palette shortcuts, plus Alt+1–6 workspace navigation
+- Shareable scenario links that reproduce custom response teams on GitHub Pages
+- Locally saved simulation state with paused recovery after a refresh
+- Simulation progress preserved while navigating between workspaces
 - Deterministic threat-response engine with success and failure outcomes
 - Three selectable incident models with distinct deadlines and capability requirements
 - Configurable aerial and ground response teams with calculated readiness scores
@@ -45,7 +52,13 @@ SENTINEL//9 is a cinematic frontend experience set inside a cyberpunk city. The 
 - Automated GitHub Pages deployment
 - Keyboard focus, semantic landmarks, skip navigation, and reduced-motion support
 
-The component rules and usage guidance are documented in [`docs/design-system.md`](docs/design-system.md). Command-shell behavior is documented in [`docs/command-center.md`](docs/command-center.md), the map interaction model in [`docs/operations-grid.md`](docs/operations-grid.md), fleet configuration in [`docs/fleet-systems.md`](docs/fleet-systems.md), and the deterministic scenario model in [`docs/threat-simulation.md`](docs/threat-simulation.md).
+The component rules and usage guidance are documented in [`docs/design-system.md`](docs/design-system.md). Command-shell behavior is documented in [`docs/command-center.md`](docs/command-center.md), the map interaction model in [`docs/operations-grid.md`](docs/operations-grid.md), fleet configuration in [`docs/fleet-systems.md`](docs/fleet-systems.md), the deterministic scenario model in [`docs/threat-simulation.md`](docs/threat-simulation.md), and command search, shortcuts, and sharing in [`docs/command-system.md`](docs/command-system.md).
+
+## Command controls
+
+Open **Command uplink** from the command center, or press **Ctrl+K** (Windows/Linux), **⌘K** (macOS), or **/**. Search by callsign, unit ID, district, incident, or action. Use the arrow keys and Enter to execute a result; Escape closes the palette. Press **?** for the shortcut guide, and **Alt+1–6** to switch workspaces.
+
+In Simulation, select **Share scenario** to copy a link with the current incident and response team. The recipient starts at briefing. Active runs continue across workspace changes and reopen paused after a refresh; browser storage is optional and sharing does not require an account.
 
 ## Run locally
 
@@ -76,16 +89,16 @@ npm run check
 
 ## Delivery roadmap
 
-1. **System foundation** — repository, quality tooling, deployment, branded shell
-2. **Brand and design system** — tokens, components, responsive navigation, motion language
-3. **Cinematic entry** — city reveal, boot sequence, layered environmental motion
-4. **Command center shell** — application structure, navigation, alerts, operator preferences
-5. **Operations grid** — interactive city map, districts, drone and robot telemetry
-6. **Fleet systems** — unit inspection, animated hangar, equipment configuration
-7. **Threat simulation** — incidents, dispatching, routes, deterministic event engine
-8. **Command system** — keyboard palette, search, shortcuts, scenario sharing
-9. **Production polish** — accessibility, responsive refinement, performance and testing
-10. **Portfolio launch** — final documentation, media, architecture notes, release
+0. **System foundation** — repository, quality tooling, deployment, branded shell
+1. **Brand and design system** — tokens, components, responsive navigation, motion language
+2. **Cinematic entry** — city reveal, boot sequence, layered environmental motion
+3. **Command center shell** — application structure, navigation, alerts, operator preferences
+4. **Operations grid** — interactive city map, districts, drone and robot telemetry
+5. **Fleet systems** — unit inspection, animated hangar, equipment configuration
+6. **Threat simulation** — incidents, dispatching, routes, deterministic event engine
+7. **Command system** — keyboard palette, search, shortcuts, scenario sharing
+8. **Production polish** — accessibility, responsive refinement, performance and testing
+9. **Portfolio launch** — final documentation, media, architecture notes, release
 
 Each delivery is intended to be independently reviewable and represented by focused commits.
 
@@ -95,4 +108,4 @@ Pushes to `main` are checked by CI and deployed through the Pages workflow. Vite
 
 ---
 
-`SENTINEL NETWORK // BUILD 00.06.00`
+`SENTINEL NETWORK // BUILD 00.07.00`

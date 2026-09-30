@@ -28,8 +28,13 @@ The engine contains no randomness, so a given scenario and response team always 
 - Pause and resume the running simulation.
 - Advance paused time manually in five-second increments.
 - Reset an active run or replay a completed scenario.
+- Reset and replay preserve the custom response team; selecting a scenario loads its recommended team.
 - Monitor unit ETAs, threat level, response score, and the event timeline.
+- Share the incident and current team as a fresh briefing link.
+- Launch, pause, resume, reset, or step a response from the global command palette.
 
 ## Delivery boundary
 
-Simulation state is local to the Simulation workspace. It does not modify the Operations map, Fleet loadouts, or acknowledged signal state. Persisted and shareable scenarios belong to the later command-system delivery.
+Delivery 07 moves simulation ownership into the command shell. A running response continues when another workspace is open. State is saved locally under `sentinel-9-simulation`; interrupted active responses recover paused with their elapsed time and team intact. A valid shared link takes priority over the saved response and opens Simulation at briefing. Invalid links and corrupt saved data are ignored safely.
+
+Simulation does not modify the Operations map, Fleet loadouts, or acknowledged signal state. See [`command-system.md`](command-system.md) for the share format and keyboard controls.

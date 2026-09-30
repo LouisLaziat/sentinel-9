@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
-import type { CSSProperties } from 'react'
+import { useMemo } from 'react'
+import type { CSSProperties, Dispatch, SetStateAction } from 'react'
 import {
   advanceSimulation,
-  createSimulationState,
   getResponseScore,
   getRouteProgress,
   getScenario,
@@ -15,8 +14,9 @@ import {
   toggleResponseUnit,
   toggleSimulationPause,
 } from '../../lib/simulation'
-import type { SimulationPhase } from '../../lib/simulation'
-import { BoltIcon, CrosshairIcon, DroneIcon, PulseIcon, ReplayIcon, RobotIcon, ShieldIcon } from '../ui/Icons'
+import type { SimulationPhase, SimulationState } from '../../lib/simulation'
+import { configuredSimulation } from '../../lib/scenario-sharing'
+import { BoltIcon, CrosshairIcon, DroneIcon, LinkIcon, PulseIcon, ReplayIcon, RobotIcon, ShieldIcon } from '../ui/Icons'
 import { StatusBadge } from '../ui/StatusBadge'
 
 const simulationEvents = [
@@ -35,8 +35,13 @@ function formatClock(seconds: number) {
   return `00:${String(seconds).padStart(2, '0')}`
 }
 
-export function ThreatSimulation() {
-  const [simulation, setSimulation] = useState(createSimulationState)
+type ThreatSimulationProps = {
+  simulation: SimulationState
+  setSimulation: Dispatch<SetStateAction<SimulationState>>
+  onShare: () => void
+}
+
+export function ThreatSimulation({ simulation, setSimulation, onShare }: ThreatSimulationProps) {
   const scenario = getScenario(simulation.scenarioId)
   const score = getResponseScore(simulation)
   const threatLevel = getThreatLevel(simulation)
@@ -44,14 +49,8 @@ export function ThreatSimulation() {
   const isRunning = simulation.phase === 'active'
   const canConfigure = simulation.phase === 'briefing'
 
-  useEffect(() => {
-    if (!isRunning) return
-    const timer = window.setInterval(() => setSimulation((current) => advanceSimulation(current)), 650)
-    return () => window.clearInterval(timer)
-  }, [isRunning])
-
   function resetSimulation() {
-    setSimulation(createSimulationState(simulation.scenarioId))
+    setSimulation(configuredSimulation(simulation))
   }
 
   return (
@@ -60,7 +59,7 @@ export function ThreatSimulation() {
         <div><span>Deterministic response engine</span><h3>Threat simulation</h3></div>
         <div className="command-view__heading-status">
           <StatusBadge tone={simulation.phase === 'failed' ? 'critical' : simulation.phase === 'resolved' ? 'online' : 'warning'} pulse={isRunning}>{phaseLabels[simulation.phase]}</StatusBadge>
-          <span>MODEL / S9-RESPONSE-06</span>
+          <button className="simulation-share-button" onClick={onShare} type="button"><LinkIcon />Share scenario</button>
         </div>
       </div>
 

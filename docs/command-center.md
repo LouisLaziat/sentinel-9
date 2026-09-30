@@ -1,6 +1,6 @@
 # Command center shell
 
-Delivery 03 turned the SENTINEL//9 design language into an interactive application shell. Deliveries 04–06 add the Operations, Fleet, and Simulation workspaces while preserving the shell's navigation, alerts, and operator preferences.
+Delivery 03 turned the SENTINEL//9 design language into an interactive application shell. Deliveries 04–06 added Operations, Fleet, and Simulation. Delivery 07 connects the shell to global command search, shortcuts, saved responses, and scenario sharing.
 
 ## Workspaces
 
@@ -25,6 +25,8 @@ Delivery 03 turned the SENTINEL//9 design language into an interactive applicati
 - Configurable aerial and ground response teams
 - Animated routes, simulation clock, threat mitigation, and event stream
 - Successful and failed outcomes based on repeatable response scoring
+- Response progress preserved across workspace changes
+- Local session recovery and shareable incident/team links
 - Full interaction details are documented in [`threat-simulation.md`](threat-simulation.md)
 
 ### Situation
@@ -56,7 +58,11 @@ Delivery 03 turned the SENTINEL//9 design language into an interactive applicati
 - Native checkboxes remain available to assistive technology.
 - The system honors `prefers-reduced-motion`; the local Environmental Motion setting can also stop command-center animations.
 - Layouts collapse from desktop sidebar to mobile tab navigation without losing features.
+- The command palette uses a native modal dialog, an accessible combobox/listbox, arrow-key navigation, Escape dismissal, and focus restoration.
+- Ctrl/⌘+K or slash opens the palette; Alt+1–6 selects a workspace, and ? opens the shortcut guide.
+- Typing in a field suppresses workspace and single-key shortcuts.
+- Full command behavior is documented in [`command-system.md`](command-system.md).
 
 ## Delivery boundary
 
-The original Situation topology remains available as a system-wide summary. Operations provides city positioning, Fleet provides frame configuration, and Simulation models response outcomes. Simulation assignments remain isolated from the live Operations and Fleet fixtures; cross-workspace scenario sharing belongs to the later command-system delivery.
+The original Situation topology remains available as a system-wide summary. Operations provides city positioning, Fleet provides frame configuration, and Simulation models response outcomes. Simulation state belongs to the command shell and continues across workspace changes. Operations and Fleet fixture values remain independent of simulation assignments. Shared links carry an incident and response team; they do not publish fleet loadouts or operator preferences.
