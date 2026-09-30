@@ -487,7 +487,7 @@
   .command-sidebar { border-right: 0; border-bottom: 1px solid var(--line-default); }
   .command-sidebar__brand,
   .command-sidebar__operator { display: none; }
-  .command-sidebar nav { grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 0.55rem; }
+  .command-sidebar nav { grid-template-columns: repeat(6, minmax(0, 1fr)); padding: 0.55rem; }
   .command-sidebar nav button { grid-template-columns: auto minmax(0, auto); justify-content: center; min-height: 2.9rem; }
   .command-sidebar nav button::before { top: auto; right: 25%; bottom: -0.55rem; left: 25%; width: auto; height: 2px; }
   .command-topbar { min-height: 4.3rem; }

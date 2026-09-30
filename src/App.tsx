@@ -78,7 +78,7 @@ export function App() {
           <div className="hero-section__copy">
             <div className="protocol-label">
               <span>Interface protocol</span>
-              <strong>05 / Fleet systems</strong>
+              <strong>06 / Threat simulation</strong>
             </div>
             <h1 id="hero-title">Designed for <span className="hero-title__signal" data-text="decisions">decisions</span> at machine speed.</h1>
             <p className="hero-section__lede">
@@ -116,7 +116,7 @@ export function App() {
         </section>
 
         <section className="page-section system-section command-section" id="command" aria-labelledby="command-title">
-          <SectionHeading description="Explore the city grid, inspect autonomous frames, configure equipment, and prepare the fleet for deployment." id="command-title" index="02" title="Autonomous command network" />
+          <SectionHeading description="Explore the city grid, configure autonomous frames, and run deterministic threat-response scenarios." id="command-title" index="02" title="Autonomous command network" />
           <CommandCenter />
         </section>
 
@@ -220,9 +220,9 @@ export function App() {
           <span className="navigation__mark" aria-hidden="true"><span>S</span><i>9</i></span>
           <span className="navigation__wordmark">SENTINEL<i>//9</i></span>
         </div>
-        <p>Fleet systems / Delivery 05</p>
+        <p>Threat simulation / Delivery 06</p>
         <span className="site-footer__author">Created by <strong>Louis Ho</strong></span>
-        <span className="site-footer__build">BUILD 00.05.00</span>
+        <span className="site-footer__build">BUILD 00.06.00</span>
       </footer>
       </div>
     </>

@@ -6,15 +6,21 @@ SENTINEL//9 is a cinematic frontend experience set inside a cyberpunk city. The 
 
 ## Current delivery
 
-**Delivery 05 — Fleet systems**
+**Delivery 06 — Threat simulation**
 
 - React and strict TypeScript application powered by Vite
+- Deterministic threat-response engine with success and failure outcomes
+- Three selectable incident models with distinct deadlines and capability requirements
+- Configurable aerial and ground response teams with calculated readiness scores
+- Animated tactical routes, unit movement, threat mitigation, and simulation time
+- Pause, resume, manual time-step, reset, and replay controls
+- Live response-event stream and final containment reports
+- Responsive six-workspace command shell for operations, fleet, simulation, situation, signals, and systems
 - Interactive fleet manifest with aerial and ground-unit selection
 - Animated hangar visualization with blueprint and frame-specific modes
 - Configurable sensor, power-core, and utility equipment slots
 - Live performance and energy calculations for every loadout change
 - Local deployment-staging state with service-lock behavior
-- Responsive five-workspace command shell for operations, fleet, situation, signals, and systems
 - Interactive city map with five selectable operational districts
 - Live drone, ground-unit, route, and threat visualization
 - Independent unit and threat filters with three map zoom levels
@@ -39,7 +45,7 @@ SENTINEL//9 is a cinematic frontend experience set inside a cyberpunk city. The 
 - Automated GitHub Pages deployment
 - Keyboard focus, semantic landmarks, skip navigation, and reduced-motion support
 
-The component rules and usage guidance are documented in [`docs/design-system.md`](docs/design-system.md). Command-shell behavior is documented in [`docs/command-center.md`](docs/command-center.md), the map interaction model in [`docs/operations-grid.md`](docs/operations-grid.md), and fleet configuration in [`docs/fleet-systems.md`](docs/fleet-systems.md).
+The component rules and usage guidance are documented in [`docs/design-system.md`](docs/design-system.md). Command-shell behavior is documented in [`docs/command-center.md`](docs/command-center.md), the map interaction model in [`docs/operations-grid.md`](docs/operations-grid.md), fleet configuration in [`docs/fleet-systems.md`](docs/fleet-systems.md), and the deterministic scenario model in [`docs/threat-simulation.md`](docs/threat-simulation.md).
 
 ## Run locally
 
@@ -89,4 +95,4 @@ Pushes to `main` are checked by CI and deployed through the Pages workflow. Vite
 
 ---
 
-`SENTINEL NETWORK // BUILD 00.05.00`
+`SENTINEL NETWORK // BUILD 00.06.00`

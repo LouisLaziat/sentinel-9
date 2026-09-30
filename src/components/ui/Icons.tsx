@@ -177,3 +177,12 @@ export function WrenchIcon(props: IconProps) {
     </IconBase>
   )
 }
+
+export function PulseIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M3 12h4l2.1-5.5 4.1 11L15.5 12H21" stroke="currentColor" strokeLinejoin="bevel" strokeWidth="1.4" />
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeDasharray="2.5 3" strokeWidth="1.1" />
+    </IconBase>
+  )
+}

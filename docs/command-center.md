@@ -1,6 +1,6 @@
 # Command center shell
 
-Delivery 03 turned the SENTINEL//9 design language into an interactive application shell. Delivery 04 adds the Operations workspace while preserving the shell's navigation, alerts, and operator preferences.
+Delivery 03 turned the SENTINEL//9 design language into an interactive application shell. Deliveries 04–06 add the Operations, Fleet, and Simulation workspaces while preserving the shell's navigation, alerts, and operator preferences.
 
 ## Workspaces
 
@@ -18,6 +18,14 @@ Delivery 03 turned the SENTINEL//9 design language into an interactive applicati
 - Equipment configuration and calculated performance telemetry
 - Local deployment staging and service-lock states
 - Full interaction details are documented in [`fleet-systems.md`](fleet-systems.md)
+
+### Simulation
+
+- Three deterministic incident scenarios
+- Configurable aerial and ground response teams
+- Animated routes, simulation clock, threat mitigation, and event stream
+- Successful and failed outcomes based on repeatable response scoring
+- Full interaction details are documented in [`threat-simulation.md`](threat-simulation.md)
 
 ### Situation
 
@@ -51,4 +59,4 @@ Delivery 03 turned the SENTINEL//9 design language into an interactive applicati
 
 ## Delivery boundary
 
-The original Situation topology remains available as a system-wide summary. Operations provides detailed city positioning, while Fleet provides frame inspection and configuration. A deterministic simulation and real unit dispatch workflow remain planned for later deliveries.
+The original Situation topology remains available as a system-wide summary. Operations provides city positioning, Fleet provides frame configuration, and Simulation models response outcomes. Simulation assignments remain isolated from the live Operations and Fleet fixtures; cross-workspace scenario sharing belongs to the later command-system delivery.
