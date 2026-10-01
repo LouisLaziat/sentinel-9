@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useMediaQuery } from '../../hooks/useBrowserSignals'
 import { CloseIcon, MenuIcon, ReplayIcon } from '../ui/Icons'
 import { StatusBadge } from '../ui/StatusBadge'
 
@@ -16,13 +17,35 @@ type NavigationProps = {
 
 export function Navigation({ onReplay }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const isMobile = useMediaQuery('(max-width: 900px)')
+  const headerRef = useRef<HTMLElement>(null)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    if (!isOpen || !isMobile) return
+    function closeOutside(event: Event) {
+      if (event.target instanceof Node && !headerRef.current?.contains(event.target)) setIsOpen(false)
+    }
+    document.addEventListener('pointerdown', closeOutside)
+    document.addEventListener('focusin', closeOutside)
+    return () => {
+      document.removeEventListener('pointerdown', closeOutside)
+      document.removeEventListener('focusin', closeOutside)
+    }
+  }, [isMobile, isOpen])
 
   function closeMenu() {
     setIsOpen(false)
   }
 
   return (
-    <header className="navigation">
+    <header className="navigation" onKeyDown={(event) => {
+      if (event.key === 'Escape' && isOpen) {
+        event.preventDefault()
+        closeMenu()
+        toggleRef.current?.focus()
+      }
+    }} ref={headerRef}>
       <a className="navigation__brand" href="#overview" onClick={closeMenu}>
         <span className="navigation__mark" aria-hidden="true">
           <span>S</span>
@@ -40,6 +63,7 @@ export function Navigation({ onReplay }: NavigationProps) {
         aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
         className="navigation__toggle"
         onClick={() => setIsOpen((current) => !current)}
+        ref={toggleRef}
         type="button"
       >
         {isOpen ? <CloseIcon /> : <MenuIcon />}
@@ -49,9 +73,14 @@ export function Navigation({ onReplay }: NavigationProps) {
         className={`navigation__links${isOpen ? ' navigation__links--open' : ''}`}
         id="primary-navigation"
         aria-label="Primary navigation"
+        aria-hidden={isMobile && !isOpen || undefined}
+        inert={isMobile && !isOpen}
       >
         {navItems.map((item) => (
-          <a href={item.href} key={item.href} onClick={closeMenu}>
+          <a href={item.href} key={item.href} onClick={() => {
+            closeMenu()
+            window.requestAnimationFrame(() => document.querySelector<HTMLElement>(item.href)?.focus({ preventScroll: true }))
+          }}>
             <span>{item.index}</span>
             {item.label}
           </a>
@@ -73,7 +102,7 @@ export function Navigation({ onReplay }: NavigationProps) {
         <StatusBadge tone="online" pulse>
           System online
         </StatusBadge>
-        <span className="navigation__clock">23:09:41 / UTC−04</span>
+        <span className="navigation__clock">PORTFOLIO / LOCAL DEMO</span>
       </div>
     </header>
   )

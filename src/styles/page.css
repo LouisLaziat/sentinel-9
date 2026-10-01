@@ -12,6 +12,7 @@ main {
 }
 
 .hero-section__copy {
+  min-width: 0;
   animation: content-reveal var(--duration-reveal) var(--ease-out) both;
 }
 
@@ -50,7 +51,7 @@ main {
   text-transform: uppercase;
 }
 
-.hero-section h1 span {
+.hero-section h1 .hero-title__signal {
   position: relative;
   display: inline-block;
   color: transparent;
@@ -62,12 +63,11 @@ main {
   isolation: isolate;
 }
 
-.hero-section h1 .hero-title__signal::before {
+.hero-section h1 .hero-title__signal-overlay {
   position: absolute;
   inset: 0;
   overflow: hidden;
   color: var(--color-cyan);
-  content: attr(data-text);
   opacity: 0;
   -webkit-text-stroke: 0;
   text-shadow: 0 0 20px rgb(88 232 255 / 55%);
@@ -75,7 +75,7 @@ main {
   animation: decision-scan 3.2s var(--ease-system) 0.35s infinite;
 }
 
-.hero-section h1 span::after {
+.hero-section h1 .hero-title__signal::after {
   position: absolute;
   left: 0;
   bottom: -0.08em;

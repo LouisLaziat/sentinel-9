@@ -49,7 +49,7 @@ The sharing dialog previews the incident, score, deadline, and assigned units. C
 
 ## Response persistence
 
-The command shell owns the simulation state and timer. Navigating to another workspace does not discard or pause the run. A versioned local snapshot under `sentinel-9-simulation` saves the incident, assignments, phase, and elapsed time. Reloading an active response restores it paused. Completed outcomes are checked against the response engine when restored. Invalid or unavailable storage falls back to a fresh response.
+The command shell owns the simulation state and timer. Navigating to another workspace does not discard or pause the run. Delivery 08 suspends timer ticks while the browser document is hidden or startup is replaying; returning resumes an active run without catching up hidden time. A versioned local snapshot under `sentinel-9-simulation` saves the incident, assignments, phase, and elapsed time. Reloading an active response restores it paused. Completed outcomes are checked against the response engine when restored. Invalid or unavailable storage falls back to a fresh response.
 
 Reset/replay preserves the current response team. Selecting a different incident loads its recommended team. During an active or paused response, incident commands remain unavailable until Reset, preventing accidental replacement.
 

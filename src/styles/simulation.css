@@ -17,10 +17,10 @@
 }
 
 .simulation-summary article:last-child { border-right: 0; }
-.simulation-summary article > span { grid-column: 1 / -1; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.42rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.simulation-summary article > span { grid-column: 1 / -1; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .simulation-summary article > strong { display: flex; gap: 0.35rem; align-items: baseline; color: var(--color-ink-100); font-family: var(--font-display); font-size: 1.2rem; }
 .simulation-summary article > strong.is-critical { color: var(--color-critical); }
-.simulation-summary article small { color: var(--color-cyan); font-family: var(--font-data); font-size: 0.36rem; font-weight: 500; }
+.simulation-summary article small { color: var(--color-cyan); font-family: var(--font-data); font-size: 0.625rem; font-weight: 500; }
 .simulation-summary article > i { grid-column: 1 / -1; height: 2px; background: rgb(255 94 108 / 10%); }
 .simulation-summary article > i b { display: block; height: 100%; background: var(--color-critical); box-shadow: 0 0 6px rgb(255 94 108 / 46%); transition: width 0.45s var(--ease-out); }
 .simulation-summary article > i b.is-ready { background: var(--color-lime); box-shadow: 0 0 6px rgb(163 255 18 / 42%); }
@@ -53,14 +53,14 @@
   padding-inline: 0.8rem;
   border-bottom: 1px solid var(--line-quiet);
   font-family: var(--font-data);
-  font-size: 0.4rem;
+  font-size: 0.625rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
 .simulation-theater__header > div { display: flex; gap: 0.45rem; align-items: center; color: var(--color-ink-500); }
 .simulation-theater__header svg { width: 0.85rem; color: var(--color-critical); }
-.simulation-theater__header strong { color: var(--color-critical); font-size: 0.37rem; font-weight: 500; }
+.simulation-theater__header strong { color: var(--color-critical); font-size: 0.625rem; font-weight: 500; }
 .simulation-theater__header > div:last-child strong { color: var(--color-lime); }
 
 .simulation-map {
@@ -113,7 +113,7 @@
   gap: 0.55rem;
   color: var(--color-ink-500);
   font-family: var(--font-data);
-  font-size: 0.34rem;
+  font-size: 0.625rem;
 }
 .simulation-map__coordinates strong { color: var(--color-lime); font-weight: 500; }
 
@@ -131,7 +131,7 @@
   color: var(--color-ink-500);
   background: rgb(3 7 10 / 90%);
   font-family: var(--font-data);
-  font-size: 0.36rem;
+  font-size: 0.625rem;
   text-transform: uppercase;
 }
 .simulation-map__legend span { display: inline-flex; gap: 0.35rem; align-items: center; }
@@ -139,7 +139,7 @@
 .simulation-map__legend .is-aerial { color: var(--color-cyan); }
 .simulation-map__legend .is-ground { color: var(--color-lime); }
 .simulation-map__legend .is-threat { color: var(--color-critical); }
-.simulation-map__legend strong { margin-left: auto; color: var(--color-cyan); font-size: 0.34rem; font-weight: 500; }
+.simulation-map__legend strong { margin-left: auto; color: var(--color-cyan); font-size: 0.625rem; font-weight: 500; }
 
 .simulation-outcome {
   position: absolute;
@@ -161,14 +161,14 @@
 }
 .simulation-outcome--failed { border-color: var(--color-critical); color: var(--color-critical); box-shadow: 0 0 38px rgb(255 94 108 / 14%); }
 .simulation-outcome svg { width: 1.6rem; height: 1.6rem; margin-bottom: 0.55rem; }
-.simulation-outcome span { color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.4rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.simulation-outcome span { color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .simulation-outcome strong { margin-top: 0.35rem; font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 0.05em; }
-.simulation-outcome small { margin-top: 0.5rem; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.36rem; text-transform: uppercase; }
+.simulation-outcome small { margin-top: 0.5rem; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; text-transform: uppercase; }
 
 .simulation-console { display: flex; flex-direction: column; }
 .simulation-console__section { border-bottom: 1px solid var(--line-quiet); }
-.simulation-console__heading { display: flex; align-items: center; justify-content: space-between; min-height: 2.4rem; padding-inline: 0.7rem; border-bottom: 1px solid var(--line-quiet); color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.37rem; letter-spacing: 0.08em; text-transform: uppercase; }
-.simulation-console__heading strong { color: var(--color-cyan); font-size: 0.34rem; font-weight: 500; }
+.simulation-console__heading { display: flex; align-items: center; justify-content: space-between; min-height: 2.4rem; padding-inline: 0.7rem; border-bottom: 1px solid var(--line-quiet); color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.simulation-console__heading strong { color: var(--color-cyan); font-size: 0.625rem; font-weight: 500; }
 
 .simulation-scenarios > button {
   display: grid;
@@ -190,18 +190,18 @@
 .simulation-scenarios > button.is-selected { color: var(--color-critical); background: linear-gradient(90deg, rgb(255 94 108 / 8%), transparent); }
 .simulation-scenarios > button:disabled { cursor: default; }
 .simulation-scenarios > button:not(.is-selected):disabled { opacity: 0.35; }
-.simulation-scenarios > button > i { color: currentColor; font-family: var(--font-data); font-size: 0.38rem; font-style: normal; }
+.simulation-scenarios > button > i { color: currentColor; font-family: var(--font-data); font-size: 0.625rem; font-style: normal; }
 .simulation-scenarios > button > span { display: grid; gap: 0.15rem; min-width: 0; }
-.simulation-scenarios > button strong { overflow: hidden; color: var(--color-ink-200); font-family: var(--font-display); font-size: 0.62rem; letter-spacing: 0.04em; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
-.simulation-scenarios > button small { overflow: hidden; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.32rem; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
-.simulation-scenarios > button > b { color: currentColor; font-family: var(--font-data); font-size: 0.36rem; font-weight: 500; }
+.simulation-scenarios > button strong { overflow: hidden; color: var(--color-ink-200); font-family: var(--font-display); font-size: 0.625rem; letter-spacing: 0.04em; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.simulation-scenarios > button small { overflow: hidden; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.simulation-scenarios > button > b { color: currentColor; font-family: var(--font-data); font-size: 0.625rem; font-weight: 500; }
 
 .simulation-brief { display: grid; gap: 0.35rem; padding: 0.8rem; border-bottom: 1px solid var(--line-quiet); }
-.simulation-brief > span { color: var(--color-critical); font-family: var(--font-data); font-size: 0.34rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.simulation-brief > span { color: var(--color-critical); font-family: var(--font-data); font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .simulation-brief h4 { margin: 0; font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.05em; text-transform: uppercase; }
-.simulation-brief p { margin: 0.15rem 0 0.45rem; color: var(--color-ink-500); font-size: 0.53rem; line-height: 1.5; }
+.simulation-brief p { margin: 0.15rem 0 0.45rem; color: var(--color-ink-500); font-size: 0.625rem; line-height: 1.5; }
 .simulation-brief dl { display: grid; gap: 0; margin: 0; }
-.simulation-brief dl > div { display: flex; justify-content: space-between; padding-block: 0.36rem; border-top: 1px solid var(--line-quiet); font-family: var(--font-data); font-size: 0.34rem; text-transform: uppercase; }
+.simulation-brief dl > div { display: flex; justify-content: space-between; padding-block: 0.36rem; border-top: 1px solid var(--line-quiet); font-family: var(--font-data); font-size: 0.625rem; text-transform: uppercase; }
 .simulation-brief dt { color: var(--color-ink-500); }
 .simulation-brief dd { margin: 0; color: var(--color-cyan); }
 
@@ -213,12 +213,12 @@
 .simulation-units button > i { display: grid; width: 1.45rem; height: 1.45rem; border: 1px solid currentColor; place-items: center; }
 .simulation-units button svg { width: 0.75rem; }
 .simulation-units button > span { display: grid; gap: 0.12rem; min-width: 0; }
-.simulation-units button strong { color: var(--color-ink-200); font-family: var(--font-display); font-size: 0.5rem; text-transform: uppercase; }
-.simulation-units button small { color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.29rem; white-space: nowrap; }
-.simulation-units button > b { color: currentColor; font-family: var(--font-data); font-size: 0.32rem; font-weight: 500; }
+.simulation-units button strong { color: var(--color-ink-200); font-family: var(--font-display); font-size: 0.625rem; text-transform: uppercase; }
+.simulation-units button small { color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; white-space: nowrap; }
+.simulation-units button > b { color: currentColor; font-family: var(--font-data); font-size: 0.625rem; font-weight: 500; }
 
 .simulation-controls { display: grid; grid-template-columns: 1fr auto; gap: 0.4rem; padding: 0.65rem; margin-top: auto; }
-.simulation-controls button { display: inline-flex; gap: 0.45rem; align-items: center; justify-content: center; min-height: 2.7rem; padding-inline: 0.7rem; border: 1px solid var(--line-default); color: var(--color-cyan); background: rgb(88 232 255 / 4%); font-family: var(--font-data); font-size: 0.35rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+.simulation-controls button { display: inline-flex; gap: 0.45rem; align-items: center; justify-content: center; min-height: 2.7rem; padding-inline: 0.7rem; border: 1px solid var(--line-default); color: var(--color-cyan); background: rgb(88 232 255 / 4%); font-family: var(--font-data); font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
 .simulation-controls button svg { width: 0.8rem; }
 .simulation-controls button:hover:not(:disabled) { border-color: var(--color-cyan); background: rgb(88 232 255 / 8%); }
 .simulation-controls button:disabled { opacity: 0.3; cursor: not-allowed; }
@@ -228,18 +228,18 @@
 .simulation-timeline { display: grid; grid-template-columns: minmax(9rem, 0.75fr) repeat(5, minmax(0, 1fr)); }
 .simulation-timeline__heading,
 .simulation-timeline article { min-height: 3.7rem; padding: 0.55rem 0.65rem; border-right: 1px solid var(--line-quiet); }
-.simulation-timeline__heading { display: grid; grid-template-columns: auto 1fr auto; gap: 0.4rem; align-items: center; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.34rem; text-transform: uppercase; }
+.simulation-timeline__heading { display: grid; grid-template-columns: auto 1fr auto; gap: 0.4rem; align-items: center; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; text-transform: uppercase; }
 .simulation-timeline__heading svg { width: 0.75rem; color: var(--color-lime); }
-.simulation-timeline__heading strong { color: var(--color-lime); font-size: 0.32rem; font-weight: 500; }
+.simulation-timeline__heading strong { color: var(--color-lime); font-size: 0.625rem; font-weight: 500; }
 .simulation-timeline article { position: relative; display: grid; grid-template-columns: auto auto 1fr; gap: 0.35rem; align-content: center; opacity: 0.28; transition: opacity var(--duration-default) ease, background var(--duration-default) ease; }
 .simulation-timeline article:last-child { border-right: 0; }
 .simulation-timeline article.is-active { opacity: 1; background: linear-gradient(180deg, rgb(163 255 18 / 3%), transparent); }
 .simulation-timeline time,
-.simulation-timeline article > span { color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.29rem; }
+.simulation-timeline article > span { color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; }
 .simulation-timeline article > span { color: var(--color-lime); }
 .simulation-timeline article > i { align-self: center; width: 0.3rem; height: 0.3rem; background: var(--color-ink-500); }
 .simulation-timeline article.is-active > i { background: var(--color-lime); box-shadow: 0 0 5px var(--color-lime); }
-.simulation-timeline p { grid-column: 1 / -1; margin: 0; color: var(--color-ink-500); font-size: 0.36rem; line-height: 1.35; }
+.simulation-timeline p { grid-column: 1 / -1; margin: 0; color: var(--color-ink-500); font-size: 0.625rem; line-height: 1.35; }
 
 .command-shell--calm .simulation-target__outer,
 .command-shell--calm .simulation-target__inner,

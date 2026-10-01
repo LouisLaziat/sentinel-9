@@ -1,9 +1,12 @@
-import { useMemo, useState } from 'react'
-import type { CSSProperties } from 'react'
+import { useId, useMemo } from 'react'
+import type { CSSProperties, Dispatch, SetStateAction } from 'react'
 import { calculateFleetStats, fleetModules, getModule } from '../../lib/fleet'
 import type { FleetLoadout } from '../../lib/fleet'
 import { fleetUnits } from '../../lib/fleet-data'
 import type { FleetUnit } from '../../lib/fleet-data'
+import { equipFleetModule, toggleStagedUnit } from '../../lib/fleet-session'
+import type { FleetSession } from '../../lib/fleet-session'
+import { nextTabIndex } from '../../lib/accessibility'
 import { BoltIcon, CrosshairIcon, DroneIcon, GridIcon, HangarIcon, RobotIcon, ShieldIcon, WrenchIcon } from '../ui/Icons'
 import { StatusBadge } from '../ui/StatusBadge'
 
@@ -36,12 +39,10 @@ function UnitSilhouette({ kind }: { kind: FleetUnit['kind'] }) {
   )
 }
 
-export function FleetSystems({ initialUnitId = 'DR-09' }: { initialUnitId?: string }) {
-  const [selectedUnitId, setSelectedUnitId] = useState(initialUnitId)
-  const [activeSlot, setActiveSlot] = useState<keyof FleetLoadout>('sensor')
-  const [loadouts, setLoadouts] = useState<Record<string, FleetLoadout>>(() => Object.fromEntries(fleetUnits.map((unit) => [unit.id, unit.loadout])))
-  const [stagedUnits, setStagedUnits] = useState<string[]>([])
-  const [blueprintMode, setBlueprintMode] = useState(false)
+export function FleetSystems({ session, onChange }: { session: FleetSession; onChange: Dispatch<SetStateAction<FleetSession>> }) {
+  const { selectedUnitId, activeSlot, loadouts, stagedUnits, blueprintMode } = session
+  const tabsId = useId()
+  const slots = Object.keys(slotLabels) as Array<keyof FleetLoadout>
 
   const selectedUnit = fleetUnits.find((unit) => unit.id === selectedUnitId) ?? fleetUnits[0]!
   const selectedLoadout = loadouts[selectedUnit.id] ?? selectedUnit.loadout
@@ -50,16 +51,11 @@ export function FleetSystems({ initialUnitId = 'DR-09' }: { initialUnitId?: stri
   const isStaged = stagedUnits.includes(selectedUnit.id)
 
   function equipModule(moduleId: string) {
-    setLoadouts((current) => ({
-      ...current,
-      [selectedUnit.id]: { ...selectedLoadout, [activeSlot]: moduleId },
-    }))
+    onChange((current) => equipFleetModule(current, moduleId))
   }
 
   function toggleStaged() {
-    setStagedUnits((current) => current.includes(selectedUnit.id)
-      ? current.filter((unitId) => unitId !== selectedUnit.id)
-      : [...current, selectedUnit.id])
+    onChange(toggleStagedUnit)
   }
 
   return (
@@ -81,7 +77,7 @@ export function FleetSystems({ initialUnitId = 'DR-09' }: { initialUnitId?: stri
           <div className="fleet-panel-heading"><span>Active manifest</span><strong>{fleetUnits.length} / 132</strong></div>
           <div className="fleet-roster__list">
             {fleetUnits.map((unit) => (
-              <button aria-pressed={selectedUnit.id === unit.id} className={selectedUnit.id === unit.id ? 'is-selected' : ''} key={unit.id} onClick={() => setSelectedUnitId(unit.id)} type="button">
+              <button aria-pressed={selectedUnit.id === unit.id} className={selectedUnit.id === unit.id ? 'is-selected' : ''} key={unit.id} onClick={() => onChange((current) => ({ ...current, selectedUnitId: unit.id }))} type="button">
                 <i style={{ '--unit-accent': unit.accent } as CSSProperties}>{unit.kind === 'drone' ? <DroneIcon /> : <RobotIcon />}</i>
                 <span><strong>{unit.callsign}</strong><small>{unit.id} / {unit.bay}</small></span>
                 <b className={`is-${unit.status}`}>{unit.readiness}%</b>
@@ -94,7 +90,7 @@ export function FleetSystems({ initialUnitId = 'DR-09' }: { initialUnitId?: stri
         <section className={`hangar-bay${blueprintMode ? ' is-blueprint' : ''}`} style={{ '--unit-accent': selectedUnit.accent } as CSSProperties}>
           <div className="hangar-bay__header">
             <div><HangarIcon /><span>Bay {selectedUnit.bay}</span><strong>{selectedUnit.kind === 'drone' ? 'AERIAL FRAME' : 'GROUND FRAME'}</strong></div>
-            <button aria-pressed={blueprintMode} onClick={() => setBlueprintMode((current) => !current)} type="button"><GridIcon />Blueprint</button>
+            <button aria-pressed={blueprintMode} onClick={() => onChange((current) => ({ ...current, blueprintMode: !current.blueprintMode }))} type="button"><GridIcon />Blueprint</button>
           </div>
           <div className="hangar-bay__stage">
             <div className="hangar-bay__grid" />
@@ -120,16 +116,23 @@ export function FleetSystems({ initialUnitId = 'DR-09' }: { initialUnitId?: stri
 
         <aside className="loadout-console">
           <div className="fleet-panel-heading"><span>Equipment loadout</span><strong>ENERGY {derivedStats.energy}%</strong></div>
-          <div className="loadout-slots" role="tablist" aria-label="Equipment slots">
-            {(Object.keys(slotLabels) as Array<keyof FleetLoadout>).map((slot) => (
-              <button aria-selected={activeSlot === slot} className={activeSlot === slot ? 'is-active' : ''} key={slot} onClick={() => setActiveSlot(slot)} role="tab" type="button">
+          <div className="loadout-slots" role="tablist" aria-label="Equipment slots" aria-orientation="vertical">
+            {slots.map((slot, index) => (
+              <button aria-controls={`${tabsId}-modules`} aria-selected={activeSlot === slot} className={activeSlot === slot ? 'is-active' : ''} id={`${tabsId}-${slot}`} key={slot} onClick={() => onChange((current) => ({ ...current, activeSlot: slot }))} onKeyDown={(event) => {
+                const next = nextTabIndex(event.key, index, slots.length, 'vertical')
+                if (next === null) return
+                event.preventDefault()
+                const nextSlot = slots[next]!
+                onChange((current) => ({ ...current, activeSlot: nextSlot }))
+                document.getElementById(`${tabsId}-${nextSlot}`)?.focus()
+              }} role="tab" tabIndex={activeSlot === slot ? 0 : -1} type="button">
                 {slot === 'sensor' ? <CrosshairIcon /> : slot === 'core' ? <BoltIcon /> : <ShieldIcon />}
                 <span>{slotLabels[slot]}<small>{getModule(selectedLoadout[slot])?.label}</small></span>
               </button>
             ))}
           </div>
 
-          <div className="module-selector" role="tabpanel">
+          <div aria-labelledby={`${tabsId}-${activeSlot}`} className="module-selector" id={`${tabsId}-modules`} role="tabpanel" tabIndex={0}>
             <span>Compatible modules / {activeSlot}</span>
             {modulesForSlot.map((module) => {
               const isEquipped = selectedLoadout[activeSlot] === module.id

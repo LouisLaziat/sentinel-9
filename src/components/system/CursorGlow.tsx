@@ -1,7 +1,10 @@
 import { useEffect } from 'react'
+import { useMediaQuery } from '../../hooks/useBrowserSignals'
 
-export function CursorGlow() {
+export function CursorGlow({ enabled = true }: { enabled?: boolean }) {
+  const finePointer = useMediaQuery('(min-width: 761px) and (pointer: fine)')
   useEffect(() => {
+    if (!enabled || !finePointer) return
     let animationFrame = 0
 
     function updatePointer(event: PointerEvent) {
@@ -18,7 +21,7 @@ export function CursorGlow() {
       cancelAnimationFrame(animationFrame)
       window.removeEventListener('pointermove', updatePointer)
     }
-  }, [])
+  }, [enabled, finePointer])
 
-  return <div className="cursor-glow" aria-hidden="true" />
+  return enabled && finePointer ? <div className="cursor-glow" aria-hidden="true" /> : null
 }

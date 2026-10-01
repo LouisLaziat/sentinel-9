@@ -1,3 +1,5 @@
+import { createSparkline } from '../../lib/telemetry'
+
 type TelemetryTone = 'lime' | 'cyan' | 'violet' | 'warning'
 
 interface TelemetryCardProps {
@@ -7,20 +9,6 @@ interface TelemetryCardProps {
   tone?: TelemetryTone
   unit?: string
   value: string
-}
-
-function createSparkline(points: number[]) {
-  const max = Math.max(...points)
-  const min = Math.min(...points)
-  const range = max - min || 1
-
-  return points
-    .map((point, index) => {
-      const x = (index / (points.length - 1)) * 100
-      const y = 34 - ((point - min) / range) * 28
-      return `${x},${y}`
-    })
-    .join(' ')
 }
 
 export function TelemetryCard({

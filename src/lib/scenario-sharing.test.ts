@@ -24,6 +24,12 @@ describe('scenario sharing', () => {
       '?s9=1&scenario=rogue-swarm&scenario=transit-breach&units=DR-41',
     ]) expect(parseScenarioLink(search)).toBeNull()
   })
+
+  it('rejects oversized and ambiguous sharing parameters', () => {
+    expect(parseScenarioLink('?s9=1&scenario=rogue-swarm&units=DR-41&extra=' + 'x'.repeat(1_000))).toBeNull()
+    expect(parseScenarioLink('?s9=1&s9=1&scenario=rogue-swarm&units=DR-41')).toBeNull()
+    expect(parseScenarioLink('?s9=1&scenario=rogue-swarm&units=DR-41&units=DR-09')).toBeNull()
+  })
 })
 
 describe('saved simulation recovery', () => {
@@ -39,5 +45,14 @@ describe('saved simulation recovery', () => {
     expect(restoreSimulation(JSON.stringify({ version: 1, ...state, elapsed: -1 }))).toBeNull()
     expect(restoreSimulation(JSON.stringify({ version: 1, ...state, assignedUnitIds: ['UNKNOWN'] }))).toBeNull()
     expect(restoreSimulation(JSON.stringify({ version: 1, ...state, phase: 'briefing' }))).toBeNull()
+  })
+
+  it('rejects excessive and non-integer snapshots and normalizes final outcomes', () => {
+    expect(restoreSimulation('x'.repeat(4_097))).toBeNull()
+    const state = createSimulationState()
+    expect(restoreSimulation(JSON.stringify({ version: 1, ...state, phase: 'active', elapsed: 0.5 }))).toBeNull()
+    expect(restoreSimulation(JSON.stringify({ version: 2, ...state }))).toBeNull()
+    const completed = advanceSimulation(launchSimulation(state), 40)
+    expect(restoreSimulation(JSON.stringify({ version: 1, ...completed, phase: completed.phase === 'resolved' ? 'failed' : 'resolved' }))).toEqual(completed)
   })
 })

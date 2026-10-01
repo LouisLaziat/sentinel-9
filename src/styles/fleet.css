@@ -16,9 +16,9 @@
 }
 
 .fleet-summary article:last-child { border-right: 0; }
-.fleet-summary span { color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.43rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.fleet-summary span { color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .fleet-summary strong { display: flex; gap: 0.35rem; align-items: baseline; font-family: var(--font-display); font-size: 1.15rem; }
-.fleet-summary small { color: var(--color-cyan); font-family: var(--font-data); font-size: 0.38rem; font-weight: 500; }
+.fleet-summary small { color: var(--color-cyan); font-family: var(--font-data); font-size: 0.625rem; font-weight: 500; }
 
 .fleet-layout {
   display: grid;
@@ -47,13 +47,13 @@
   padding-inline: 0.75rem;
   border-bottom: 1px solid var(--line-quiet);
   font-family: var(--font-data);
-  font-size: 0.42rem;
+  font-size: 0.625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .fleet-panel-heading span { color: var(--color-ink-500); }
-.fleet-panel-heading strong { color: var(--color-cyan); font-size: 0.39rem; font-weight: 500; }
+.fleet-panel-heading strong { color: var(--color-cyan); font-size: 0.625rem; font-weight: 500; }
 
 .fleet-roster__list { display: grid; padding: 0.45rem; }
 
@@ -92,8 +92,8 @@
 .fleet-roster__list button > i svg { width: 1rem; }
 .fleet-roster__list button > span { display: grid; gap: 0.25rem; min-width: 0; }
 .fleet-roster__list button > span strong { overflow: hidden; color: var(--color-ink-200); font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.05em; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
-.fleet-roster__list button > span small { color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.39rem; }
-.fleet-roster__list button > b { color: var(--color-lime); font-family: var(--font-data); font-size: 0.43rem; font-weight: 500; }
+.fleet-roster__list button > span small { color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; }
+.fleet-roster__list button > b { color: var(--color-lime); font-family: var(--font-data); font-size: 0.625rem; font-weight: 500; }
 .fleet-roster__list button > b.is-service { color: var(--color-warning); }
 .fleet-roster__list button > b.is-calibrating { color: var(--color-cyan); }
 
@@ -108,7 +108,7 @@
   border-top: 1px solid var(--line-quiet);
   color: var(--color-ink-500);
   font-family: var(--font-data);
-  font-size: 0.37rem;
+  font-size: 0.625rem;
   text-transform: uppercase;
 }
 
@@ -132,10 +132,10 @@
   border-bottom: 1px solid var(--line-quiet);
 }
 
-.hangar-bay__header > div { display: flex; gap: 0.45rem; align-items: center; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.4rem; text-transform: uppercase; }
+.hangar-bay__header > div { display: flex; gap: 0.45rem; align-items: center; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; text-transform: uppercase; }
 .hangar-bay__header > div svg { width: 0.8rem; color: var(--unit-accent); }
-.hangar-bay__header > div strong { color: var(--unit-accent); font-size: 0.37rem; font-weight: 500; }
-.hangar-bay__header button { display: inline-flex; gap: 0.4rem; align-items: center; min-height: 1.8rem; padding-inline: 0.55rem; border: 1px solid var(--line-quiet); color: var(--color-ink-500); background: transparent; font-family: var(--font-data); font-size: 0.38rem; text-transform: uppercase; cursor: pointer; }
+.hangar-bay__header > div strong { color: var(--unit-accent); font-size: 0.625rem; font-weight: 500; }
+.hangar-bay__header button { display: inline-flex; gap: 0.4rem; align-items: center; min-height: 1.8rem; padding-inline: 0.55rem; border: 1px solid var(--line-quiet); color: var(--color-ink-500); background: transparent; font-family: var(--font-data); font-size: 0.625rem; text-transform: uppercase; cursor: pointer; }
 .hangar-bay__header button:hover,
 .hangar-bay__header button[aria-pressed="true"] { border-color: rgb(88 232 255 / 38%); color: var(--color-cyan); background: rgb(88 232 255 / 6%); }
 .hangar-bay__header button svg { width: 0.75rem; }
@@ -183,7 +183,7 @@
 .hangar-bay__orbit i:nth-child(2) { inset: 12%; border-style: dashed; animation: hangar-orbit 14s linear infinite; }
 .hangar-bay__orbit i:nth-child(3) { inset: 29%; border-color: color-mix(in srgb, var(--unit-accent) 38%, transparent); animation: hangar-orbit 8s linear infinite reverse; }
 
-.hangar-bay__datum { position: absolute; z-index: 3; color: color-mix(in srgb, var(--unit-accent) 76%, var(--color-ink-500)); font-family: var(--font-data); font-size: 0.34rem; letter-spacing: 0.08em; }
+.hangar-bay__datum { position: absolute; z-index: 3; color: color-mix(in srgb, var(--unit-accent) 76%, var(--color-ink-500)); font-family: var(--font-data); font-size: 0.625rem; letter-spacing: 0.08em; }
 .hangar-bay__datum--one { top: 1rem; left: 1rem; }
 .hangar-bay__datum--two { right: 1rem; bottom: 1.1rem; }
 .hangar-bay__datum--three { bottom: 1.1rem; left: 1rem; }
@@ -221,16 +221,16 @@
 }
 
 .hangar-unit > div:first-child { display: grid; gap: 0.2rem; }
-.hangar-unit > div:first-child span { color: var(--unit-accent); font-family: var(--font-data); font-size: 0.38rem; letter-spacing: 0.07em; text-transform: uppercase; }
+.hangar-unit > div:first-child span { color: var(--unit-accent); font-family: var(--font-data); font-size: 0.625rem; letter-spacing: 0.07em; text-transform: uppercase; }
 .hangar-unit h4 { margin: 0; font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 0.05em; text-transform: uppercase; }
 .hangar-unit dl { display: grid; grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; }
-.hangar-unit dl > div { display: flex; gap: 0.5rem; justify-content: space-between; padding: 0.4rem 0.55rem; border: 1px solid var(--line-quiet); border-right: 0; font-family: var(--font-data); font-size: 0.38rem; }
+.hangar-unit dl > div { display: flex; gap: 0.5rem; justify-content: space-between; padding: 0.4rem 0.55rem; border: 1px solid var(--line-quiet); border-right: 0; font-family: var(--font-data); font-size: 0.625rem; }
 .hangar-unit dl > div:last-child { border-right: 1px solid var(--line-quiet); }
 .hangar-unit dt { color: var(--color-ink-500); text-transform: uppercase; }
 .hangar-unit dd { margin: 0; color: var(--color-cyan); }
 
 .fleet-performance { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line-quiet); }
-.fleet-performance > div { display: grid; grid-template-columns: 1fr auto; gap: 0.35rem; padding: 0.55rem 0.65rem; border-right: 1px solid var(--line-quiet); font-family: var(--font-data); font-size: 0.38rem; text-transform: uppercase; }
+.fleet-performance > div { display: grid; grid-template-columns: 1fr auto; gap: 0.35rem; padding: 0.55rem 0.65rem; border-right: 1px solid var(--line-quiet); font-family: var(--font-data); font-size: 0.625rem; text-transform: uppercase; }
 .fleet-performance > div:last-child { border-right: 0; }
 .fleet-performance span { color: var(--color-ink-500); }
 .fleet-performance strong { color: var(--unit-accent); font-weight: 500; }
@@ -256,23 +256,23 @@
 .loadout-slots button:hover,
 .loadout-slots button.is-active { border-color: rgb(88 232 255 / 26%); color: var(--color-cyan); background: rgb(88 232 255 / 5%); }
 .loadout-slots button > svg { width: 0.9rem; }
-.loadout-slots button > span { display: grid; gap: 0.2rem; font-family: var(--font-data); font-size: 0.42rem; text-transform: uppercase; }
-.loadout-slots button small { overflow: hidden; color: var(--color-ink-500); font-size: 0.34rem; text-overflow: ellipsis; white-space: nowrap; }
+.loadout-slots button > span { display: grid; gap: 0.2rem; font-family: var(--font-data); font-size: 0.625rem; text-transform: uppercase; }
+.loadout-slots button small { overflow: hidden; color: var(--color-ink-500); font-size: 0.625rem; text-overflow: ellipsis; white-space: nowrap; }
 
 .module-selector { display: grid; gap: 0.35rem; padding: 0.7rem; border-block: 1px solid var(--line-quiet); }
-.module-selector > span { margin-bottom: 0.2rem; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.36rem; letter-spacing: 0.07em; text-transform: uppercase; }
+.module-selector > span { margin-bottom: 0.2rem; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; letter-spacing: 0.07em; text-transform: uppercase; }
 .module-selector button { display: grid; grid-template-columns: 1.7rem minmax(0, 1fr); gap: 0.55rem; align-items: center; min-height: 3.4rem; padding: 0.45rem; border: 1px solid var(--line-quiet); color: var(--color-ink-500); background: rgb(255 255 255 / 1%); text-align: left; cursor: pointer; }
 .module-selector button:hover { border-color: rgb(88 232 255 / 30%); }
 .module-selector button.is-equipped { border-color: rgb(163 255 18 / 34%); background: rgb(163 255 18 / 4%); }
 .module-selector button > i { display: grid; width: 1.65rem; height: 1.65rem; border: 1px solid var(--line-default); place-items: center; }
 .module-selector button > i svg { width: 0.75rem; }
 .module-selector button > span { display: grid; gap: 0.15rem; min-width: 0; }
-.module-selector button strong { color: var(--color-ink-200); font-family: var(--font-display); font-size: 0.58rem; letter-spacing: 0.04em; text-transform: uppercase; }
-.module-selector button small { display: -webkit-box; overflow: hidden; color: var(--color-ink-500); font-size: 0.42rem; line-height: 1.4; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.module-selector button > b { grid-column: 2; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.33rem; font-weight: 500; }
+.module-selector button strong { color: var(--color-ink-200); font-family: var(--font-display); font-size: 0.625rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.module-selector button small { display: -webkit-box; overflow: hidden; color: var(--color-ink-500); font-size: 0.625rem; line-height: 1.4; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.module-selector button > b { grid-column: 2; color: var(--color-ink-500); font-family: var(--font-data); font-size: 0.625rem; font-weight: 500; }
 .module-selector button.is-equipped > b { color: var(--color-lime); }
 
-.loadout-energy { display: grid; grid-template-columns: 1fr auto; gap: 0.4rem; padding: 0.75rem; font-family: var(--font-data); font-size: 0.38rem; text-transform: uppercase; }
+.loadout-energy { display: grid; grid-template-columns: 1fr auto; gap: 0.4rem; padding: 0.75rem; font-family: var(--font-data); font-size: 0.625rem; text-transform: uppercase; }
 .loadout-energy > span { display: flex; gap: 0.35rem; align-items: center; color: var(--color-ink-500); }
 .loadout-energy svg { width: 0.7rem; color: var(--color-warning); }
 .loadout-energy strong { color: var(--color-warning); font-weight: 500; }
@@ -290,7 +290,7 @@
   color: var(--color-field-950);
   background: var(--color-lime);
   font-family: var(--font-data);
-  font-size: 0.42rem;
+  font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;

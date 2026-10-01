@@ -80,6 +80,7 @@ export function OperationsMap({ initialSelection }: { initialSelection?: Operati
   function toggleFilter(filter: keyof typeof filters) {
     setFilters((current) => ({ ...current, [filter]: !current[filter] }))
     if (filter === 'threats' && filters.threats) setSelectedThreatId(null)
+    if ((filter === 'drones' && selectedUnit?.kind === 'drone' || filter === 'ground' && selectedUnit?.kind === 'ground') && filters[filter]) setSelectedUnitId(null)
   }
 
   return (
@@ -103,10 +104,14 @@ export function OperationsMap({ initialSelection }: { initialSelection?: Operati
         </div>
       </div>
 
+      <div className="operations-district-controls" role="group" aria-label="Select city district">
+        {districts.map((district) => <button aria-pressed={selectedDistrict.id === district.id} key={district.id} onClick={() => selectDistrict(district.id)} type="button"><span>{district.code}</span>{district.name}</button>)}
+      </div>
+
       <div className="operations-layout">
         <article className="city-map-panel">
-          <div className="city-map-panel__coordinates"><span>43.6532° N</span><span>79.3832° W</span><strong>GRID LOCK</strong></div>
-          <svg className="city-map" viewBox="0 0 760 540" role="img" aria-labelledby="city-map-title city-map-description">
+          <div className="city-map-panel__coordinates precision-detail"><span>43.6532° N</span><span>79.3832° W</span><strong>GRID LOCK</strong></div>
+          <svg className="city-map" viewBox="0 0 760 540" role="group" aria-labelledby="city-map-title" aria-describedby="city-map-description">
             <title id="city-map-title">Interactive SENTINEL city operations map</title>
             <desc id="city-map-description">Five selectable city districts with live drone, ground robot, and threat markers.</desc>
             <defs>
@@ -200,7 +205,8 @@ export function OperationsMap({ initialSelection }: { initialSelection?: Operati
           <div className="city-map-panel__legend"><span><i className="is-drone" />Drone</span><span><i className="is-ground" />Ground</span><span><i className="is-threat" />Threat</span><strong>{visibleUnits.length} UNITS VISIBLE</strong></div>
         </article>
 
-        <aside className="operations-inspector" aria-live="polite">
+        <aside className="operations-inspector" aria-label="Selection inspector">
+          <p className="sr-only" role="status">{selectedUnit?.callsign ?? selectedThreat?.label ?? selectedDistrict.name} selected.</p>
           <div className="operations-inspector__header"><span>Selection inspector</span><strong>{selectedUnit ? 'UNIT' : selectedThreat ? 'THREAT' : 'DISTRICT'}</strong></div>
 
           {selectedUnit && (

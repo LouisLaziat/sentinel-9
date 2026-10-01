@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import type { CSSProperties } from 'react'
 import {
   BellIcon,
@@ -22,11 +22,17 @@ import { configuredSimulation, parseScenarioLink, restoreSimulation, serializeSi
 import { advanceSimulation, createSimulationState, launchSimulation, selectSimulationScenario, toggleSimulationPause } from '../../lib/simulation'
 import type { SimulationState } from '../../lib/simulation'
 import { StatusBadge } from '../ui/StatusBadge'
-import { FleetSystems } from './FleetSystems'
+import { createFleetSession } from '../../lib/fleet-session'
+import { canRunSimulation } from '../../lib/accessibility'
+import { usePageVisibility } from '../../hooks/useBrowserSignals'
+import { LoadingIndicator } from '../ui/LoadingIndicator'
+import { CommandClock } from './CommandClock'
 import { OperationsMap } from './OperationsMap'
 import { ThreatSimulation } from './ThreatSimulation'
 import { CommandPalette } from './CommandPalette'
 import { ScenarioShare } from './ScenarioShare'
+
+const FleetSystems = lazy(() => import('./FleetSystems').then((module) => ({ default: module.FleetSystems })))
 
 type Alert = {
   id: string
@@ -87,28 +93,6 @@ const districts = [
   { name: 'Ashfall', code: 'N-07', value: 82 },
   { name: 'Lower Arc', code: 'S-04', value: 94 },
 ] as const
-
-const defaultPreferences: Preferences = {
-  environmentalMotion: true,
-  precisionTelemetry: true,
-  tacticalContrast: false,
-}
-
-function loadPreferences(): Preferences {
-  try {
-    const stored = window.localStorage.getItem('sentinel-9-preferences')
-    if (!stored) return defaultPreferences
-
-    const parsed = JSON.parse(stored) as Partial<Preferences>
-    return {
-      environmentalMotion: typeof parsed.environmentalMotion === 'boolean' ? parsed.environmentalMotion : true,
-      precisionTelemetry: typeof parsed.precisionTelemetry === 'boolean' ? parsed.precisionTelemetry : true,
-      tacticalContrast: typeof parsed.tacticalContrast === 'boolean' ? parsed.tacticalContrast : false,
-    }
-  } catch {
-    return defaultPreferences
-  }
-}
 
 function loadCommandSession() {
   const shared = parseScenarioLink(window.location.search)
@@ -176,7 +160,7 @@ function SituationWorkspace({ openAlerts }: { openAlerts: number }) {
             <span><i className="is-drone" />Aerial</span>
             <span><i className="is-ground" />Ground</span>
             <span><i className="is-node" />Relay</span>
-            <strong>43.6532° N / 79.3832° W</strong>
+            <strong className="precision-detail">43.6532° N / 79.3832° W</strong>
           </div>
         </article>
 
@@ -273,15 +257,14 @@ function SystemsWorkspace({ preferences, onToggle }: { preferences: Preferences;
   )
 }
 
-export function CommandCenter({ enabled = true }: { enabled?: boolean }) {
+export function CommandCenter({ enabled = true, preferences, onTogglePreference }: { enabled?: boolean; preferences: Preferences; onTogglePreference: (key: keyof Preferences) => void }) {
   const [initialSession] = useState(loadCommandSession)
   const [workspace, setWorkspace] = useState<Workspace>(initialSession.shared ? 'simulation' : 'operations')
   const [acknowledged, setAcknowledged] = useState<string[]>([])
-  const [preferences, setPreferences] = useState<Preferences>(loadPreferences)
-  const [clock, setClock] = useState(() => new Date())
+  const pageVisible = usePageVisibility()
   const [simulation, setSimulation] = useState(initialSession.simulation)
   const [operationsSelection, setOperationsSelection] = useState<OperationsSelection>()
-  const [fleetUnitId, setFleetUnitId] = useState<string>()
+  const [fleetSession, setFleetSession] = useState(createFleetSession)
   const [selectionVersion, setSelectionVersion] = useState(0)
   const [isPaletteOpen, setPaletteOpen] = useState(false)
   const [showShortcuts, setShowShortcuts] = useState(false)
@@ -290,23 +273,10 @@ export function CommandCenter({ enabled = true }: { enabled?: boolean }) {
   const [shortcutModifier] = useState(() => /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘' : 'Ctrl')
 
   useEffect(() => {
-    const timer = window.setInterval(() => setClock(new Date()), 1_000)
-    return () => window.clearInterval(timer)
-  }, [])
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem('sentinel-9-preferences', JSON.stringify(preferences))
-    } catch {
-      // The command center still works when storage is unavailable.
-    }
-  }, [preferences])
-
-  useEffect(() => {
-    if (!enabled || simulation.phase !== 'active') return
+    if (!canRunSimulation(enabled, pageVisible, simulation.phase)) return
     const timer = window.setInterval(() => setSimulation((current) => advanceSimulation(current)), 650)
     return () => window.clearInterval(timer)
-  }, [enabled, simulation.phase])
+  }, [enabled, pageVisible, simulation.phase])
 
   useEffect(() => {
     try {
@@ -327,15 +297,10 @@ export function CommandCenter({ enabled = true }: { enabled?: boolean }) {
   }, [enabled, notice])
 
   const openAlerts = alerts.length - acknowledged.length
-  const clockLabel = useMemo(() => clock.toLocaleTimeString('en-CA', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }), [clock])
 
   function acknowledgeAlert(id: string) {
     setAcknowledged((current) => current.includes(id) ? current : [...current, id])
   }
-
-  const togglePreference = useCallback((key: keyof Preferences) => {
-    setPreferences((current) => ({ ...current, [key]: !current[key] }))
-  }, [])
 
   const openPalette = useCallback((help = false) => {
     setShowShortcuts(help)
@@ -390,7 +355,7 @@ export function CommandCenter({ enabled = true }: { enabled?: boolean }) {
         navigateWorkspace('operations')
         break
       case 'fleet-unit':
-        setFleetUnitId(action.id)
+        setFleetSession((current) => ({ ...current, selectedUnitId: action.id }))
         setSelectionVersion((current) => current + 1)
         navigateWorkspace('fleet')
         break
@@ -399,8 +364,8 @@ export function CommandCenter({ enabled = true }: { enabled?: boolean }) {
         navigateWorkspace('simulation')
         break
       case 'preference':
-        togglePreference(action.key)
-        setNotice(`${entry.title}. Operator preference saved.`)
+        onTogglePreference(action.key)
+        setNotice(`${entry.title}. Operator preference updated.`)
         break
       case 'simulation':
         setSimulation((current) => action.control === 'launch' ? launchSimulation(current)
@@ -415,7 +380,7 @@ export function CommandCenter({ enabled = true }: { enabled?: boolean }) {
   return (
     <div className={`command-shell${preferences.environmentalMotion ? '' : ' command-shell--calm'}${preferences.tacticalContrast ? ' command-shell--contrast' : ''}`}>
       <aside className="command-sidebar">
-        <div className="command-sidebar__brand"><span>S9</span><div><strong>COMMAND</strong><small>CORE / 07</small></div></div>
+        <div className="command-sidebar__brand"><span>S9</span><div><strong>COMMAND</strong><small>CORE / 08</small></div></div>
         <nav aria-label="Command center workspaces">
           {workspaceItems.map((item, index) => (
             <button aria-current={workspace === item.id ? 'page' : undefined} className={workspace === item.id ? 'is-active' : ''} key={item.id} onClick={() => setWorkspace(item.id)} type="button">
@@ -432,7 +397,7 @@ export function CommandCenter({ enabled = true }: { enabled?: boolean }) {
           <div className="command-topbar__breadcrumb"><span>Sentinel network</span><i>/</i><strong>{workspace}</strong></div>
           <div className="command-topbar__status">
             <button aria-haspopup="dialog" aria-keyshortcuts="Control+k Meta+k /" aria-label="Open command palette" className="command-launcher" onClick={() => openPalette()} type="button"><CommandIcon /><span>Command uplink</span><kbd>{shortcutModifier} K</kbd></button>
-            <span className="command-topbar__clock">{clockLabel}<small>UTC−04</small></span>
+            <CommandClock enabled={enabled} />
             <button aria-label={`${openAlerts} open alerts. Open signal intelligence.`} className={openAlerts ? 'has-alerts' : ''} onClick={() => setWorkspace('signals')} type="button"><BellIcon /><b>{openAlerts}</b></button>
             <button aria-label="Open system preferences" className={workspace === 'systems' ? 'is-active' : ''} onClick={() => setWorkspace('systems')} type="button"><SettingsIcon /></button>
           </div>
@@ -440,11 +405,11 @@ export function CommandCenter({ enabled = true }: { enabled?: boolean }) {
 
         <div aria-label={`${workspace} workspace`} className="command-console__viewport" id="command-workspace" key={`${workspace}-${selectionVersion}`} tabIndex={-1}>
           {workspace === 'operations' && <OperationsMap initialSelection={operationsSelection} />}
-          {workspace === 'fleet' && <FleetSystems initialUnitId={fleetUnitId} />}
+          {workspace === 'fleet' && <Suspense fallback={<div className="workspace-loading"><LoadingIndicator label="Connecting hangar systems" /></div>}><FleetSystems onChange={setFleetSession} session={fleetSession} /></Suspense>}
           {workspace === 'simulation' && <ThreatSimulation onShare={() => setShareSnapshot(simulation)} setSimulation={setSimulation} simulation={simulation} />}
           {workspace === 'situation' && <SituationWorkspace openAlerts={openAlerts} />}
           {workspace === 'signals' && <SignalsWorkspace acknowledged={acknowledged} onAcknowledge={acknowledgeAlert} />}
-          {workspace === 'systems' && <SystemsWorkspace preferences={preferences} onToggle={togglePreference} />}
+          {workspace === 'systems' && <SystemsWorkspace preferences={preferences} onToggle={onTogglePreference} />}
         </div>
 
         <footer className="command-statusbar">
@@ -452,9 +417,10 @@ export function CommandCenter({ enabled = true }: { enabled?: boolean }) {
           <span>UPLINK 2.8 GB/S</span>
           <span>ENCRYPTION AES-512</span>
           <button className="command-shortcut-guide" onClick={() => openPalette(true)} type="button">Shortcuts <kbd>?</kbd></button>
-          <strong>BUILD 00.07.00</strong>
+          <strong>BUILD 00.08.00</strong>
         </footer>
       </div>
+      <p className="sr-only" role="status">{openAlerts} signals awaiting review.</p>
       {notice && <div className="command-notice" role="status"><CommandIcon /><span>{notice}</span><button aria-label="Dismiss command notification" onClick={() => setNotice('')} type="button"><CloseIcon /></button></div>}
       {enabled && isPaletteOpen && <CommandPalette commands={commands} onClose={() => setPaletteOpen(false)} onExecute={executeCommand} shortcutModifier={shortcutModifier} showShortcuts={showShortcuts} />}
       {enabled && shareSnapshot && <ScenarioShare onClose={() => setShareSnapshot(null)} simulation={shareSnapshot} />}

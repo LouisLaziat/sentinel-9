@@ -1,5 +1,8 @@
-import { useCallback, useState } from 'react'
-import { CommandCenter } from './components/command/CommandCenter'
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
+import { useMediaQuery, usePageVisibility } from './hooks/useBrowserSignals'
+import { loadPreferences } from './lib/preferences'
+import type { PreferenceKey } from './lib/preferences'
+import { WorkspaceBoundary } from './components/ui/WorkspaceBoundary'
 import { BootSequence } from './components/system/BootSequence'
 import { CursorGlow } from './components/system/CursorGlow'
 import { Environment } from './components/system/Environment'
@@ -19,6 +22,8 @@ import { SectionHeading } from './components/ui/SectionHeading'
 import { StatusBadge } from './components/ui/StatusBadge'
 import { TelemetryCard } from './components/ui/TelemetryCard'
 import { Tooltip } from './components/ui/Tooltip'
+
+const CommandCenter = lazy(() => import('./components/command/CommandCenter').then((module) => ({ default: module.CommandCenter })))
 
 const telemetry = [
   { label: 'Active units', value: '128', change: '+08 today', tone: 'lime' as const, points: [4, 6, 5, 9, 8, 12, 11, 16, 15, 19] },
@@ -53,9 +58,43 @@ function SignalBars() {
 
 export function App() {
   const [isBooting, setIsBooting] = useState(true)
+  const [hasEntered, setHasEntered] = useState(false)
+  const [preferences, setPreferences] = useState(loadPreferences)
+  const [controlPreview, setControlPreview] = useState('Control preview. Real response actions are available in the command network.')
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+  const pageVisible = usePageVisibility()
+  const motionEnabled = preferences.environmentalMotion && !reducedMotion
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('sentinel-9-preferences', JSON.stringify(preferences))
+    } catch {
+      // Preferences work in memory when browser storage is unavailable.
+    }
+  }, [preferences])
+
+  useEffect(() => {
+    const root = document.documentElement
+    root.dataset.motion = motionEnabled ? 'on' : 'off'
+    root.dataset.pageVisible = String(pageVisible)
+    root.dataset.precision = String(preferences.precisionTelemetry)
+    root.dataset.contrast = String(preferences.tacticalContrast)
+    return () => {
+      delete root.dataset.motion
+      delete root.dataset.pageVisible
+      delete root.dataset.precision
+      delete root.dataset.contrast
+    }
+  }, [motionEnabled, pageVisible, preferences.precisionTelemetry, preferences.tacticalContrast])
+
+  const togglePreference = useCallback((key: PreferenceKey) => {
+    setPreferences((current) => ({ ...current, [key]: !current[key] }))
+  }, [])
 
   const completeBoot = useCallback(() => {
+    setHasEntered(true)
     setIsBooting(false)
+    window.requestAnimationFrame(() => document.getElementById('main-content')?.focus({ preventScroll: true }))
   }, [])
 
   const replayBoot = useCallback(() => {
@@ -65,22 +104,22 @@ export function App() {
 
   return (
     <>
-      {isBooting && <BootSequence onComplete={completeBoot} />}
+      {isBooting && <BootSequence onComplete={completeBoot} reducedMotion={!motionEnabled} visible={pageVisible} />}
 
       <div className="app-shell" aria-hidden={isBooting} inert={isBooting}>
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <Environment />
-      <CursorGlow />
+      <CursorGlow enabled={motionEnabled && pageVisible} />
       <Navigation onReplay={replayBoot} />
 
-      <main id="main-content">
-        <section className="hero-section page-section" id="overview" aria-labelledby="hero-title">
+      <main id="main-content" tabIndex={-1}>
+        <section className="hero-section page-section" id="overview" aria-labelledby="hero-title" tabIndex={-1}>
           <div className="hero-section__copy">
             <div className="protocol-label">
               <span>Interface protocol</span>
-              <strong>07 / Command uplink</strong>
+              <strong>08 / Production polish</strong>
             </div>
-            <h1 id="hero-title">Designed for <span className="hero-title__signal" data-text="decisions">decisions</span> at machine speed.</h1>
+            <h1 id="hero-title">Designed for <span className="hero-title__signal">decisions<span aria-hidden="true" className="hero-title__signal-overlay">decisions</span></span> at machine speed.</h1>
             <p className="hero-section__lede">
               A precision interface system for the operators, machines, and
               autonomous agents protecting tomorrow&apos;s megacities.
@@ -115,12 +154,16 @@ export function App() {
           {telemetry.map((item) => <TelemetryCard key={item.label} {...item} />)}
         </section>
 
-        <section className="page-section system-section command-section" id="command" aria-labelledby="command-title">
+        <section className="page-section system-section command-section" id="command" aria-labelledby="command-title" tabIndex={-1}>
           <SectionHeading description="Explore the city grid, dispatch response teams, and take command with a single keystroke." id="command-title" index="02" title="Autonomous command network" />
-          <CommandCenter enabled={!isBooting} />
+          <WorkspaceBoundary>
+            <Suspense fallback={<div className="workspace-loading"><LoadingIndicator label="Connecting command network" /></div>}>
+              {hasEntered && <CommandCenter enabled={!isBooting} onTogglePreference={togglePreference} preferences={preferences} />}
+            </Suspense>
+          </WorkspaceBoundary>
         </section>
 
-        <section className="page-section system-section" id="primitives" aria-labelledby="primitives-title">
+        <section className="page-section system-section" id="primitives" aria-labelledby="primitives-title" tabIndex={-1}>
           <SectionHeading description="A restrained signal palette and sharply defined hierarchy keep dense information readable under pressure." id="primitives-title" index="03" title="Visual primitives" />
 
           <div className="primitive-grid">
@@ -145,11 +188,12 @@ export function App() {
 
             <HudPanel className="control-showcase" eyebrow="Controls / Action hierarchy" meta="4 modes" title="Operator controls">
               <div className="button-showcase">
-                <Button icon={<BoltIcon />} size="small">Deploy</Button>
-                <Button icon={<CrosshairIcon />} size="small" variant="secondary">Locate</Button>
-                <Button icon={<GridIcon />} size="small" variant="ghost">Filter</Button>
-                <Button size="small" variant="danger">Abort</Button>
+                <Button icon={<BoltIcon />} onClick={() => setControlPreview('Deploy preview: primary actions use a high-visibility lime signal.')} size="small">Deploy</Button>
+                <Button icon={<CrosshairIcon />} onClick={() => setControlPreview('Locate preview: secondary actions preserve the current context.')} size="small" variant="secondary">Locate</Button>
+                <Button icon={<GridIcon />} onClick={() => setControlPreview('Filter preview: quiet actions refine the current view.')} size="small" variant="ghost">Filter</Button>
+                <Button onClick={() => setControlPreview('Abort preview: destructive actions use the threat-coral signal. No simulation was changed.')} size="small" variant="danger">Abort</Button>
               </div>
+              <p className="showcase-feedback" role="status">{controlPreview}</p>
               <div className="status-showcase">
                 <StatusBadge tone="online" pulse>Operational</StatusBadge>
                 <StatusBadge tone="warning">Attention</StatusBadge>
@@ -165,7 +209,7 @@ export function App() {
           </div>
         </section>
 
-        <section className="page-section system-section" id="modules" aria-labelledby="modules-title">
+        <section className="page-section system-section" id="modules" aria-labelledby="modules-title" tabIndex={-1}>
           <SectionHeading description="Composable panels turn the visual system into a believable command surface ready for live simulation data." id="modules-title" index="04" title="Interface modules" />
 
           <div className="module-grid">
@@ -179,7 +223,7 @@ export function App() {
                   </article>
                 ))}
               </div>
-              <Button className="alert-module__action" icon={<ArrowUpRightIcon />} variant="ghost" size="small">Open event log</Button>
+              <Button className="alert-module__action" href="#command" icon={<ArrowUpRightIcon />} variant="ghost" size="small">Explore live operations</Button>
             </HudPanel>
 
             <HudPanel className="readiness-module" eyebrow="Fleet systems" meta="128 units" title="Deployment readiness" tone="cyan">
@@ -196,15 +240,15 @@ export function App() {
 
             <HudPanel className="preference-module" eyebrow="Operator profile" meta="Local" title="Interface preferences">
               <div className="preference-list">
-                <label><span><strong>Environmental motion</strong><small>Atmospheric grid and scan effects</small></span><input type="checkbox" defaultChecked /><i aria-hidden="true" /></label>
-                <label><span><strong>Precision telemetry</strong><small>Show high-resolution readings</small></span><input type="checkbox" defaultChecked /><i aria-hidden="true" /></label>
-                <label><span><strong>Audio channel</strong><small>Enable ambient interface sound</small></span><input type="checkbox" /><i aria-hidden="true" /></label>
+                <label><span><strong>Environmental motion</strong><small>{reducedMotion ? 'Your system requests reduced motion' : 'Page-wide animation and scan effects'}</small></span><input checked={preferences.environmentalMotion} onChange={() => togglePreference('environmentalMotion')} type="checkbox" /><i aria-hidden="true" /></label>
+                <label><span><strong>Precision telemetry</strong><small>Show detailed map coordinates</small></span><input checked={preferences.precisionTelemetry} onChange={() => togglePreference('precisionTelemetry')} type="checkbox" /><i aria-hidden="true" /></label>
+                <label><span><strong>Tactical contrast</strong><small>Increase text and panel separation</small></span><input checked={preferences.tacticalContrast} onChange={() => togglePreference('tacticalContrast')} type="checkbox" /><i aria-hidden="true" /></label>
               </div>
             </HudPanel>
           </div>
         </section>
 
-        <section className="page-section system-section motion-section" id="motion" aria-labelledby="motion-title">
+        <section className="page-section system-section motion-section" id="motion" aria-labelledby="motion-title" tabIndex={-1}>
           <SectionHeading description="Motion communicates system state. It stays purposeful, interruptible, and fully removable when reduced motion is requested." id="motion-title" index="05" title="Motion language" />
 
           <div className="motion-grid">
@@ -220,9 +264,9 @@ export function App() {
           <span className="navigation__mark" aria-hidden="true"><span>S</span><i>9</i></span>
           <span className="navigation__wordmark">SENTINEL<i>//9</i></span>
         </div>
-        <p>Command uplink / Delivery 07</p>
+        <p>Production polish / Delivery 08</p>
         <span className="site-footer__author">Created by <strong>Louis Ho</strong></span>
-        <span className="site-footer__build">BUILD 00.07.00</span>
+        <span className="site-footer__build">BUILD 00.08.00</span>
       </footer>
       </div>
     </>

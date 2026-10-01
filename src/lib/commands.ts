@@ -2,6 +2,7 @@ import { fleetUnits } from './fleet-data'
 import { districts, operationsUnits } from './operations-data'
 import { threatScenarios } from './simulation'
 import type { SimulationState } from './simulation'
+import type { PreferenceKey, Preferences } from './preferences'
 
 export const workspaceDefinitions = [
   { id: 'operations', label: 'Operations', detail: 'City grid, districts, and live assets', keywords: 'map city drone robot patrol' },
@@ -13,8 +14,7 @@ export const workspaceDefinitions = [
 ] as const
 
 export type Workspace = typeof workspaceDefinitions[number]['id']
-export type PreferenceKey = 'environmentalMotion' | 'precisionTelemetry' | 'tacticalContrast'
-export type Preferences = Record<PreferenceKey, boolean>
+export type { PreferenceKey, Preferences } from './preferences'
 export type CommandCategory = 'Navigate' | 'Districts' | 'Units' | 'Scenarios' | 'Actions'
 export type CommandAction =
   | { type: 'workspace'; workspace: Workspace }

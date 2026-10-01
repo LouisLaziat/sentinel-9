@@ -1,6 +1,6 @@
 # Command center shell
 
-Delivery 03 turned the SENTINEL//9 design language into an interactive application shell. Deliveries 04–06 added Operations, Fleet, and Simulation. Delivery 07 connects the shell to global command search, shortcuts, saved responses, and scenario sharing.
+Delivery 03 turned the SENTINEL//9 design language into an interactive application shell. Deliveries 04–06 added Operations, Fleet, and Simulation. Delivery 07 connects the shell to global command search, shortcuts, saved responses, and scenario sharing. Delivery 08 improves accessibility, responsive layouts, shared preferences, and background-aware updates.
 
 ## Workspaces
 
@@ -56,7 +56,9 @@ Delivery 03 turned the SENTINEL//9 design language into an interactive applicati
 - Active workspaces expose `aria-current="page"`.
 - Alert controls have descriptive accessible labels.
 - Native checkboxes remain available to assistive technology.
-- The system honors `prefers-reduced-motion`; the local Environmental Motion setting can also stop command-center animations.
+- The system honors `prefers-reduced-motion`; Environmental Motion also stops animations across the entire page. Both preference panels control the same state.
+- Precision Telemetry hides detailed map coordinates; Tactical Contrast strengthens page-wide secondary text and panel boundaries.
+- Preference recovery validates each saved field and falls back safely if storage is malformed or unavailable.
 - Layouts collapse from desktop sidebar to mobile tab navigation without losing features.
 - The command palette uses a native modal dialog, an accessible combobox/listbox, arrow-key navigation, Escape dismissal, and focus restoration.
 - Ctrl/⌘+K or slash opens the palette; Alt+1–6 selects a workspace, and ? opens the shortcut guide.
@@ -66,3 +68,5 @@ Delivery 03 turned the SENTINEL//9 design language into an interactive applicati
 ## Delivery boundary
 
 The original Situation topology remains available as a system-wide summary. Operations provides city positioning, Fleet provides frame configuration, and Simulation models response outcomes. Simulation state belongs to the command shell and continues across workspace changes. Operations and Fleet fixture values remain independent of simulation assignments. Shared links carry an incident and response team; they do not publish fleet loadouts or operator preferences.
+
+Fleet configuration and inspection state also belong to the shell and survive workspace switches. Operations selection/filter state is workspace-local. Hidden browser tabs suspend simulation ticks and the operational clock; an active run resumes when visible without advancing through hidden time. The clock updates independently rather than rerendering the entire shell each second.

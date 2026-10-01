@@ -24,7 +24,11 @@ Each unit has three configurable slots:
 - Power core
 - Utility system
 
-Compatible modules modify power, mobility, defense, and projected energy draw. The pure calculation rules live in `src/lib/fleet.ts` and are covered by Vitest. Loadout and staging changes remain local to the current session.
+Compatible modules modify power, mobility, defense, and projected energy draw. The pure calculation rules live in `src/lib/fleet.ts` and are covered by Vitest. Immutable session updates live in `src/lib/fleet-session.ts` and validate module-slot compatibility and service locks.
+
+Delivery 08 lifts loadouts, staging, blueprint mode, selected frame, and selected slot into the command shell. They survive workspace navigation and palette inspection commands, but remain local to the current page session; a refresh restores fixture defaults.
+
+The vertical equipment tablist uses a single tab stop. Up/Down wraps through slots, Home/End jumps to the first/last slot, and Tab moves into the labelled module panel. Pointer selection remains available at every width.
 
 ## Delivery boundary
 

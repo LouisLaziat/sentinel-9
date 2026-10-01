@@ -82,6 +82,7 @@
     box-shadow: var(--shadow-panel);
     opacity: 0;
     pointer-events: none;
+    visibility: hidden;
     transform: translateY(-0.5rem);
     transition: opacity var(--duration-fast) ease, transform var(--duration-default) var(--ease-out);
   }
@@ -89,6 +90,7 @@
   .navigation__links--open {
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
     transform: translateY(0);
   }
 
@@ -209,7 +211,7 @@
   }
 
   .hero-section h1 {
-    font-size: clamp(3.2rem, 16vw, 5rem);
+    font-size: clamp(2.4rem, 12.8vw, 4.6rem);
   }
 
   .hero-section__actions {

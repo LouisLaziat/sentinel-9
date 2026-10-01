@@ -14,10 +14,13 @@ Delivery 04 adds a spatial command surface to SENTINEL//9. The Operations worksp
 ## Keyboard and accessibility
 
 - Districts, units, and threats are keyboard-focusable controls inside the SVG map.
+- The SVG is an accessible group rather than a single flattened image, so its interactive controls remain exposed.
+- Native district buttons above the map provide a larger touch and keyboard alternative.
 - Enter and Space activate the focused map target.
 - Filter and zoom controls expose their current state with native buttons and ARIA attributes.
 - Active targets use both color and geometry, so selection is not communicated by color alone.
 - Motion is removed when the operating system requests reduced motion or Environmental Motion is disabled in Systems.
+- Hiding a unit layer clears an inspector selection from that layer. Selection changes use a short screen-reader status instead of announcing the entire inspector.
 
 ## Data and state
 

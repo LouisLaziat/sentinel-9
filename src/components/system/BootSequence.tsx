@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 
 type BootSequenceProps = {
   onComplete: () => void
+  reducedMotion: boolean
+  visible: boolean
 }
 
 const bootStages = [
@@ -67,9 +69,10 @@ const buildings = [
   { x: 1107, width: 76, height: 170 },
 ] as const
 
-export function BootSequence({ onComplete }: BootSequenceProps) {
+export function BootSequence({ onComplete, reducedMotion, visible }: BootSequenceProps) {
+  const skipRef = useRef<HTMLButtonElement>(null)
   const [stage, setStage] = useState(() => (
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    reducedMotion
       ? bootStages.length - 1
       : 0
   ))
@@ -83,6 +86,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
 
   useEffect(() => {
     document.body.classList.add('is-booting')
+    skipRef.current?.focus()
 
     return () => {
       document.body.classList.remove('is-booting')
@@ -90,7 +94,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
   }, [])
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (!visible) return
 
     const timer = window.setTimeout(() => {
       if (stage === bootStages.length - 1) {
@@ -99,15 +103,19 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
       }
 
       setStage((current) => current + 1)
-    }, mediaQuery.matches ? 320 : activeStage.duration)
+    }, reducedMotion ? 320 : activeStage.duration)
 
     return () => window.clearTimeout(timer)
-  }, [activeStage.duration, onComplete, stage])
+  }, [activeStage.duration, onComplete, reducedMotion, stage, visible])
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
+        event.preventDefault()
         onComplete()
+      } else if (event.key === 'Tab') {
+        event.preventDefault()
+        skipRef.current?.focus()
       }
     }
 
@@ -137,7 +145,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
           <strong>ENTRY / 02</strong>
         </div>
 
-        <button aria-label="Skip startup sequence" className="boot-skip" onClick={onComplete} type="button">
+        <button aria-label="Skip startup sequence" className="boot-skip" onClick={onComplete} ref={skipRef} type="button">
           <span>Skip sequence</span>
           <kbd>ESC</kbd>
         </button>
