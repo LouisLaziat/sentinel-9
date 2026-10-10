@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import { useMediaQuery, usePageVisibility } from './hooks/useBrowserSignals'
 import { loadPreferences } from './lib/preferences'
 import type { PreferenceKey } from './lib/preferences'
+import { project } from './lib/project'
 import { WorkspaceBoundary } from './components/ui/WorkspaceBoundary'
 import { BootSequence } from './components/system/BootSequence'
 import { CursorGlow } from './components/system/CursorGlow'
@@ -117,7 +118,7 @@ export function App() {
           <div className="hero-section__copy">
             <div className="protocol-label">
               <span>Interface protocol</span>
-              <strong>08 / Production polish</strong>
+              <strong>{project.delivery} / {project.phase}</strong>
             </div>
             <h1 id="hero-title">Designed for <span className="hero-title__signal">decisions<span aria-hidden="true" className="hero-title__signal-overlay">decisions</span></span> at machine speed.</h1>
             <p className="hero-section__lede">
@@ -264,9 +265,16 @@ export function App() {
           <span className="navigation__mark" aria-hidden="true"><span>S</span><i>9</i></span>
           <span className="navigation__wordmark">SENTINEL<i>//9</i></span>
         </div>
-        <p>Production polish / Delivery 08</p>
-        <span className="site-footer__author">Created by <strong>Louis Ho</strong></span>
-        <span className="site-footer__build">BUILD 00.08.00</span>
+        <p>{project.phase} / Delivery {project.delivery}</p>
+        <span className="site-footer__author">Created by <strong>{project.author}</strong></span>
+        <span className="site-footer__build">BUILD {project.build}</span>
+        <div className="site-footer__project">
+          <span>Fictional network. Real frontend engineering.</span>
+          <nav aria-label="Project resources">
+            <a href={project.repositoryUrl} rel="noreferrer" target="_blank">Source code <ArrowUpRightIcon /></a>
+            <a href={`${project.repositoryUrl}/blob/main/docs/case-study.md`} rel="noreferrer" target="_blank">Case study <ArrowUpRightIcon /></a>
+          </nav>
+        </div>
       </footer>
       </div>
     </>

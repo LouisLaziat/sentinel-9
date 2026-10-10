@@ -1,120 +1,146 @@
 # SENTINEL//9
 
-> Autonomous Megacity Defense Network
+> Fictional network. Real frontend engineering.
 
-SENTINEL//9 is a cinematic frontend experience set inside a cyberpunk city. The finished application will let visitors monitor and dispatch autonomous drones and ground units, investigate incidents, and watch the simulated city react in real time.
+A cinematic cyberpunk command center by **Louis Ho**. Inspect a megacity, configure autonomous drones and ground frames, and run repeatable threat-response simulations—all in a static, browser-local frontend.
 
-## Current delivery
+[Explore the live demo](https://louislaziat.github.io/sentinel-9/) · [Case study](docs/case-study.md) · [Architecture](docs/architecture.md) · [Launch checklist](docs/portfolio-launch.md)
 
-**Delivery 08 — Production polish**
+**React · TypeScript · Vite · CSS/SVG · Vitest · GitHub Pages**
 
-- React and strict TypeScript application powered by Vite
-- Page-wide motion and contrast controls with operating-system reduced-motion support
-- Accessible mobile disclosure navigation and keyboard-operated fleet tabs
-- Touch-friendly district controls and refined phone/tablet layouts
-- Lazy-loaded command and fleet workspaces with loading and recovery states
-- Background-aware simulation, clock, cursor lighting, and animation updates
-- Fleet loadouts, staging, and inspection state preserved across workspace changes
-- Validated preference recovery and 57 automated regression tests
-- Searchable cyberpunk command palette with 32 contextual commands
-- Direct access to workspaces, district inspectors, unit tracking, fleet frames, and threat scenarios
-- Keyboard navigation, category filters, shortcut guide, and accessible modal focus handling
-- Ctrl/⌘+K and slash palette shortcuts, plus Alt+1–6 workspace navigation
-- Shareable scenario links that reproduce custom response teams on GitHub Pages
-- Locally saved simulation state with paused recovery after a refresh
-- Simulation progress preserved while navigating between workspaces
-- Deterministic threat-response engine with success and failure outcomes
-- Three selectable incident models with distinct deadlines and capability requirements
-- Configurable aerial and ground response teams with calculated readiness scores
-- Animated tactical routes, unit movement, threat mitigation, and simulation time
-- Pause, resume, manual time-step, reset, and replay controls
-- Live response-event stream and final containment reports
-- Responsive six-workspace command shell for operations, fleet, simulation, situation, signals, and systems
-- Interactive fleet manifest with aerial and ground-unit selection
-- Animated hangar visualization with blueprint and frame-specific modes
-- Configurable sensor, power-core, and utility equipment slots
-- Live performance and energy calculations for every loadout change
-- Local deployment-staging state with service-lock behavior
-- Interactive city map with five selectable operational districts
-- Live drone, ground-unit, route, and threat visualization
-- Independent unit and threat filters with three map zoom levels
-- Contextual inspector for districts, units, and threat signals
-- Unit tracking state, district asset lists, and a live activity stream
-- Animated network topology with drone, ground-unit, and relay telemetry
-- Actionable signal queue with acknowledgement state and live alert counts
-- Persistent operator preferences stored locally in the browser
-- Live operational clock, district health, operator identity, and system status
-- Animated signal treatment for the hero word “Decisions”
-- Five-stage autonomous network boot sequence with live progress telemetry
-- Animated cyberpunk skyline, defense drones, targeting lattice, and city uplinks
-- Cinematic handoff from system initialization into the interface
-- Skippable sequence with keyboard support and an in-app replay control
-- Reduced-motion behavior that preserves the narrative without prolonged animation
-- Complete color, typography, spacing, geometry, and motion tokens
-- Reusable buttons, HUD panels, status badges, telemetry cards, tooltips, and loaders
-- Responsive navigation and design-system showcase
-- Cursor lighting, atmospheric grid, signal effects, and restrained interface motion
-- ESLint, Vitest, and production build checks
-- GitHub Actions continuous integration
-- Automated GitHub Pages deployment
-- Keyboard focus, semantic landmarks, skip navigation, and reduced-motion support
+Delivery 09 — Portfolio launch / v0.9.0
 
-The component rules and usage guidance are documented in [`docs/design-system.md`](docs/design-system.md). Command-shell behavior is documented in [`docs/command-center.md`](docs/command-center.md), the map interaction model in [`docs/operations-grid.md`](docs/operations-grid.md), fleet configuration in [`docs/fleet-systems.md`](docs/fleet-systems.md), the deterministic scenario model in [`docs/threat-simulation.md`](docs/threat-simulation.md), and command search, shortcuts, and sharing in [`docs/command-system.md`](docs/command-system.md). Accessibility, performance, and release checks are documented in [`docs/production-polish.md`](docs/production-polish.md).
+![SENTINEL//9 overview with its Decisions headline and cyan network identity](docs/media/overview.jpg)
 
-## Command controls
+## Try it in one minute
 
-Open **Command uplink** from the command center, or press **Ctrl+K** (Windows/Linux), **⌘K** (macOS), or **/**. Search by callsign, unit ID, district, incident, or action. Use the arrow keys and Enter to execute a result; Escape closes the palette. Press **?** for the shortcut guide, and **Alt+1–6** to switch workspaces.
+1. Enter the network or press Escape to skip startup.
+2. In **Operations**, inspect a district, select a drone, or track a ground unit.
+3. In **Fleet**, change a sensor/core/utility module and compare performance and energy draw.
+4. In **Simulation**, choose a threat and response team, then launch, pause, or step time forward.
+5. Press **Ctrl+K / ⌘K** to search commands, or share a scenario link for the same challenge.
 
-In Simulation, select **Share scenario** to copy a link with the current incident and response team. The recipient starts at briefing. Active runs continue across workspace changes and reopen paused after a refresh; browser storage is optional and sharing does not require an account.
+![A stepped walkthrough of the command center and threat simulation](docs/media/command-demo.gif)
 
-Environmental Motion applies to the whole page, including startup and the blue “Decisions” signal. System reduced-motion settings always take priority. Background tabs suspend animation and simulation time; returning resumes an active response without catching up hidden time. Fleet configurations survive workspace navigation but reset on a page refresh.
+The GIF is an edited sequence of real app captures, not a real-time performance recording. A static view is available above and in the gallery below.
+
+## What the project demonstrates
+
+| Area | Implementation |
+| --- | --- |
+| Visual system | Cinematic startup, blue Decisions signal, atmospheric grid, reusable HUD panels, SVG machines |
+| Application state | Six workspaces, preserved fleet/simulation sessions, actionable signals, shared preferences |
+| Pure interaction rules | Repeatable response scoring, derived loadout telemetry, search ranking, validated URL/storage recovery |
+| Keyboard and motion | Command palette, native dialogs, equipment arrow keys, inert mobile menu, OS reduced motion, global calm mode |
+| Loading and hosting | Lazy command/fleet modules, isolated clock, hidden-tab suspension, static GitHub Pages deployment |
+| Quality | 60 regression tests, strict type checking, lint, documentation/media/build-asset validation |
+
+### Six workspaces
+
+- **Operations:** five districts, unit/threat layers, zoom, tracking, and contextual inspection.
+- **Fleet:** four representative frames, blueprint mode, configurable equipment, energy calculations, and service-aware staging.
+- **Simulation:** three incident models, response assignments, routes, pause/step/reset, and containment outcomes.
+- **Situation:** system-wide topology, coverage, and fictional telemetry.
+- **Signals:** severity-coded event queue and acknowledgement counts.
+- **Systems:** page-wide motion, precision coordinates, and tactical contrast controls.
+
+<details>
+<summary>Screenshot gallery</summary>
+
+### Operations
+
+![Interactive city operations map with contextual inspector](docs/media/operations.jpg)
+
+### Fleet
+
+![Drone hangar and configurable equipment modules](docs/media/fleet.jpg)
+
+### Simulation
+
+![Paused response simulation with route and threat telemetry](docs/media/simulation.jpg)
+
+### Phone layout
+
+![SENTINEL//9 phone layout with readable title and responsive navigation](docs/media/mobile.jpg)
+
+</details>
 
 ## Run locally
 
-Requirements: Node.js 24 or newer. Node.js 24 is used in CI.
+Use **Node.js 24 or newer**. Node 24 is used in both GitHub workflows.
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Run every quality check before committing:
+Open the local URL printed by Vite. On Windows, stop a running dev server before reinstalling dependencies if a native module is locked. A regular source edit does not require another install.
 
 ```bash
-npm run check
+npm run check:release
 ```
-
-## Scripts
 
 | Command | Purpose |
 | --- | --- |
-| `npm run dev` | Start the Vite development server |
-| `npm run build` | Type-check and create the production build |
-| `npm run lint` | Run ESLint with zero warnings allowed |
-| `npm test` | Run the Vitest suite once |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run preview` | Preview the production build locally |
-| `npm run check` | Run lint, tests, and build together |
+| `npm run dev` | Local Vite development server |
+| `npm run build` | Strict TypeScript check and production build |
+| `npm run lint` | ESLint, with zero warnings allowed |
+| `npm test` | Run the regression suite once |
+| `npm run test:watch` | Interactive Vitest watch mode |
+| `npm run preview` | Serve the built production app locally |
+| `npm run check` | Lint, tests, type checking, and build |
+| `npm run check:release` | All checks plus docs, media, metadata, and built-asset validation |
 
-## Delivery roadmap
+## Controls and persistence
 
-0. **System foundation** — repository, quality tooling, deployment, branded shell
-1. **Brand and design system** — tokens, components, responsive navigation, motion language
-2. **Cinematic entry** — city reveal, boot sequence, layered environmental motion
-3. **Command center shell** — application structure, navigation, alerts, operator preferences
-4. **Operations grid** — interactive city map, districts, drone and robot telemetry
-5. **Fleet systems** — unit inspection, animated hangar, equipment configuration
-6. **Threat simulation** — incidents, dispatching, routes, deterministic event engine
-7. **Command system** — keyboard palette, search, shortcuts, scenario sharing
-8. **Production polish** — accessibility, responsive refinement, performance and testing
-9. **Portfolio launch** — final documentation, media, architecture notes, release
+Ctrl+K (Windows/Linux), ⌘K (macOS), or slash opens the 32-command palette after startup. Use arrows and Enter to execute, Escape to dismiss, **?** for help, and **Alt+1–6** for workspaces. Editable fields suppress single-key and workspace shortcuts.
 
-Each delivery is intended to be independently reviewable and represented by focused commits.
+Scenario links carry only an incident and response team. The recipient starts at briefing. An active response survives workspace navigation and recovers paused on refresh. Fleet equipment/staging survives workspace changes but resets on refresh. Preferences are shared between both panels and saved locally when storage is available.
+
+Environmental Motion affects the whole page, including startup and the Decisions signal; OS reduced-motion settings take priority. Hidden tabs suspend simulation and ambient work without hidden-time catch-up.
+
+## Architecture and documentation
+
+- [Architecture and state lifetimes](docs/architecture.md)
+- [Portfolio case study and interview walkthrough](docs/case-study.md)
+- [Design system](docs/design-system.md) and [command shell](docs/command-center.md)
+- [Operations](docs/operations-grid.md), [fleet](docs/fleet-systems.md), and [simulation engine](docs/threat-simulation.md)
+- [Commands, shortcuts, and sharing](docs/command-system.md)
+- [Accessibility/performance verification](docs/production-polish.md)
+- [Media guide](docs/media-guide.md), [launch handoff](docs/portfolio-launch.md), and [draft release notes](docs/release-notes.md)
+- [Changelog](CHANGELOG.md)
 
 ## Deployment
 
-Pushes to `main` are checked by CI and deployed through the Pages workflow. Vite automatically uses `/sentinel-9/` as the production base path when building inside GitHub Actions.
+Pushes to `main` run CI and the GitHub Pages workflow. Both run release checks; Pages uploads `dist` only after its checks succeed. Vite uses `/sentinel-9/` automatically inside GitHub Actions, and the validator checks that asset prefix. The app needs no backend or route-rewrite service.
 
----
+Publication remains an owner action: review, commit, push, wait for CI/Pages, and inspect the deployed build. A GitHub tag/release is optional. Follow the [launch checklist](docs/portfolio-launch.md) rather than treating local verification as proof of deployment.
 
-`SENTINEL NETWORK // BUILD 00.08.00`
+## Scope, privacy, and attribution
+
+This is a **fictional frontend demo**, not a real defense system. Units, coordinates, operators, events, network metrics, and encryption labels are fixtures. There is no backend, real fleet control, authentication, analytics integration, or real-time data feed. Equipment changes do not alter simulation scoring.
+
+Preferences and saved runs use optional local storage; the normal application flow does not upload them. Sharing a URL discloses its scenario/team configuration. Deployed source maps expose source code, so secrets and personal contact details must never be committed or included in build variables.
+
+Created by Louis Ho with AI-assisted implementation and iterative review. The case study describes that process without claiming client work, production adoption, or unmeasured business results. Targeted accessibility checks are documented; complete WCAG certification is not claimed.
+
+## Delivery roadmap
+
+0. System foundation — repository, quality tooling, GitHub Pages
+1. Brand and design system — tokens, components, navigation, motion
+2. Cinematic entry — city reveal and boot sequence
+3. Command center shell — workspaces, alerts, preferences
+4. Operations grid — city map, districts, unit telemetry
+5. Fleet systems — inspection, hangar, equipment configuration
+6. Threat simulation — incidents, assignments, deterministic engine
+7. Command system — palette, shortcuts, scenario sharing
+8. Production polish — accessibility, responsive refinement, performance
+9. Portfolio launch — media, documentation, architecture, release preparation
+
+Deliveries 00–09 form the original project scope. Optional visual or simulation expansions can follow after launch.
+
+## License
+
+[MIT](LICENSE). Original interface graphics are code-native CSS/SVG; committed media is captured from this application.
+
+`SENTINEL NETWORK // BUILD 00.09.00`

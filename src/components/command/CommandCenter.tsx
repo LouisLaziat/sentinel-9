@@ -24,6 +24,7 @@ import type { SimulationState } from '../../lib/simulation'
 import { StatusBadge } from '../ui/StatusBadge'
 import { createFleetSession } from '../../lib/fleet-session'
 import { canRunSimulation } from '../../lib/accessibility'
+import { project } from '../../lib/project'
 import { usePageVisibility } from '../../hooks/useBrowserSignals'
 import { LoadingIndicator } from '../ui/LoadingIndicator'
 import { CommandClock } from './CommandClock'
@@ -380,7 +381,7 @@ export function CommandCenter({ enabled = true, preferences, onTogglePreference 
   return (
     <div className={`command-shell${preferences.environmentalMotion ? '' : ' command-shell--calm'}${preferences.tacticalContrast ? ' command-shell--contrast' : ''}`}>
       <aside className="command-sidebar">
-        <div className="command-sidebar__brand"><span>S9</span><div><strong>COMMAND</strong><small>CORE / 08</small></div></div>
+        <div className="command-sidebar__brand"><span>S9</span><div><strong>COMMAND</strong><small>CORE / {project.delivery}</small></div></div>
         <nav aria-label="Command center workspaces">
           {workspaceItems.map((item, index) => (
             <button aria-current={workspace === item.id ? 'page' : undefined} className={workspace === item.id ? 'is-active' : ''} key={item.id} onClick={() => setWorkspace(item.id)} type="button">
@@ -417,7 +418,7 @@ export function CommandCenter({ enabled = true, preferences, onTogglePreference 
           <span>UPLINK 2.8 GB/S</span>
           <span>ENCRYPTION AES-512</span>
           <button className="command-shortcut-guide" onClick={() => openPalette(true)} type="button">Shortcuts <kbd>?</kbd></button>
-          <strong>BUILD 00.08.00</strong>
+          <strong>BUILD {project.build}</strong>
         </footer>
       </div>
       <p className="sr-only" role="status">{openAlerts} signals awaiting review.</p>

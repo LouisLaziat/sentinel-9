@@ -1,7 +1,7 @@
 {
   "name": "sentinel-9",
   "private": true,
-  "version": "0.8.0",
+  "version": "0.9.0",
   "type": "module",
   "description": "A cinematic autonomous megacity defense network experience.",
   "scripts": {
@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "preview": "vite preview",
-    "check": "npm run lint && npm run test && npm run build"
+    "check": "npm run lint && npm run test && npm run build",
+    "check:release": "npm run check && node scripts/check-release.mjs"
   },
   "dependencies": {
     "react": "^19.3.0",
