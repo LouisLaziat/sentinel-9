@@ -43,7 +43,8 @@ function jpegSize(bytes) {
 const social = await readFile(path.join(root, 'public/social-preview.jpg'))
 assert.deepEqual(jpegSize(social), { width: 1200, height: 630 }, 'Social preview must be 1200 × 630.')
 assert(social.length < 500_000, 'Social preview must remain below 500kB.')
-for (const name of ['overview', 'operations', 'fleet', 'simulation', 'mobile']) {
+const screenshots = ['overview', 'operations', 'fleet', 'simulation', 'mobile', 'defense', 'defense-fr']
+for (const name of screenshots) {
   const screenshot = await readFile(path.join(root, `docs/media/${name}.jpg`))
   jpegSize(screenshot)
   assert(screenshot.length < 1_000_000, `${name} screenshot must remain below 1MB.`)
@@ -57,14 +58,26 @@ assert(html.includes('og:image') && html.includes('twitter:card'), 'Built HTML m
 assert(html.includes('https://louislaziat.github.io/sentinel-9/social-preview.jpg'), 'Social URL must point at the Pages asset.')
 const prefix = pages ? '/sentinel-9/' : '/'
 let assets = 0
-for (const [, reference] of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
-  if (/^(?:https?:|#)/.test(reference)) continue
-  assert(reference.startsWith(prefix), `Expected ${prefix} asset prefix: ${reference}`)
-  await stat(path.join(root, 'dist', reference.slice(prefix.length))).catch(() => assert.fail(`Missing built asset: ${reference}`))
-  assets += 1
+const frenchHtml = await read('dist/fr/index.html')
+assert(html.includes('<html lang="en">'), 'Default entry must remain English.')
+assert(frenchHtml.includes('<html lang="fr">'), 'French entry must declare its language.')
+assert(frenchHtml.includes('<title>SENTINEL//9 — Réseau autonome de défense urbaine</title>'), 'French page title must be localized.')
+assert(/name="description"\s+content="Un centre de commande cyberpunk par Louis Ho/.test(frenchHtml), 'French static description must be localized.')
+assert(frenchHtml.includes('hreflang="x-default" href="https://louislaziat.github.io/sentinel-9/"'), 'English must remain the default alternate.')
+assert(frenchHtml.includes('rel="canonical" href="https://louislaziat.github.io/sentinel-9/fr/"'), 'French canonical must include /fr/.')
+assert(frenchHtml.includes('content="fr_FR"'), 'French social locale must be localized.')
+assert(frenchHtml.includes('Activez JavaScript'), 'French noscript fallback must be localized.')
+for (const entry of [html, frenchHtml]) {
+  for (const [, reference] of entry.matchAll(/(?:src|href)="([^"]+)"/g)) {
+    if (/^(?:https?:|#)/.test(reference)) continue
+    assert(reference.startsWith(prefix), `Expected ${prefix} asset prefix: ${reference}`)
+    await stat(path.join(root, 'dist', reference.slice(prefix.length))).catch(() => assert.fail(`Missing built asset: ${reference}`))
+    assets += 1
+  }
+  assert(!entry.includes('/src/'), 'Built HTML must not reference development source.')
 }
 assert(assets >= 3, 'Expected entry script, stylesheet, and favicon.')
 assert(!html.includes('/src/'), 'Built HTML must not reference development source.')
 assert.deepEqual(jpegSize(await readFile(path.join(root, 'dist/social-preview.jpg'))), { width: 1200, height: 630 })
 
-console.log(`Release ${packageInfo.version}: ${markdownFiles.length} documents, ${links} local links, 7 media assets, and ${assets} build assets verified (${prefix}).`)
+console.log(`Release ${packageInfo.version}: ${markdownFiles.length} documents, ${links} local links, ${screenshots.length + 2} media assets, and ${assets} build references across EN/FR entries verified (${prefix}).`)

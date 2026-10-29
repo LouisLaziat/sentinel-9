@@ -1,0 +1,19 @@
+.navigation { grid-template-columns: auto minmax(0, 1fr) auto; gap: 1.2rem; }
+.navigation__links { gap: clamp(0.65rem, 1.1vw, 1.3rem); }
+.navigation__tools { display: flex; gap: 0.9rem; align-items: center; justify-content: flex-end; }
+.language-switcher { display: flex; flex-shrink: 0; padding: 0.15rem; border: 1px solid var(--line-default); background: #0b141b; }
+.language-switcher a { display: grid; min-width: 2.3rem; min-height: 2.75rem; padding: 0.4rem; place-items: center; color: var(--color-ink-200); font-family: var(--font-data); font-size: 0.75rem; text-decoration: none; }
+.language-switcher a[aria-current="page"] { color: #07120b; background: var(--color-lime); }
+.language-switcher a:hover:not([aria-current]) { color: var(--color-cyan); background: rgb(88 232 255 / 8%); }
+html[lang="fr"] h1, html[lang="fr"] h2, html[lang="fr"] h3, html[lang="fr"] h4 { overflow-wrap: anywhere; hyphens: auto; }
+@media (max-width: 1320px) { .navigation__clock { display: none; } }
+@media (max-width: 1100px) {
+  .navigation { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .navigation__tools { grid-column: 2; grid-row: 1; }
+  .navigation__toggle { display: grid; grid-column: 3; grid-row: 1; place-items: center; cursor: pointer; }
+  .navigation__links { position: absolute; top: calc(100% + 1px); right: var(--page-gutter); left: var(--page-gutter); display: grid; gap: 0; padding: 0.8rem 1rem; border: 1px solid var(--line-default); background: rgb(6 9 13 / 98%); box-shadow: var(--shadow-panel); opacity: 0; pointer-events: none; visibility: hidden; transform: translateY(-0.5rem); transition: opacity var(--duration-fast) ease, transform var(--duration-default) var(--ease-out); }
+  .navigation__links--open { opacity: 1; pointer-events: auto; visibility: visible; transform: translateY(0); }
+  .navigation__links a { justify-content: space-between; min-height: 3rem; border-bottom: 1px solid var(--line-quiet); }
+  .navigation__replay { justify-content: center; min-height: 2.8rem; margin-top: 0.65rem; }
+}
+@media (max-width: 600px) { .navigation__tools .navigation__status { display: none; } .navigation { gap: 0.65rem; } }

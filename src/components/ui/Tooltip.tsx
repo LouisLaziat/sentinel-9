@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import { useId, useState, type ReactNode } from 'react'
 
 interface TooltipProps {
@@ -10,13 +11,13 @@ export function Tooltip({ children, label }: TooltipProps) {
   const [dismissed, setDismissed] = useState(false)
 
   return (
-    <span className="tooltip" tabIndex={0} aria-describedby={dismissed ? undefined : id} onBlur={() => setDismissed(false)} onPointerLeave={() => setDismissed(false)} onKeyDown={(event) => {
+    <Localize><span className="tooltip" tabIndex={0} aria-describedby={dismissed ? undefined : id} onBlur={() => setDismissed(false)} onPointerLeave={() => setDismissed(false)} onKeyDown={(event) => {
       if (event.key === 'Escape') { event.stopPropagation(); setDismissed(true) }
     }}>
       {children}
       <span className="tooltip__bubble" hidden={dismissed} id={id} role="tooltip">
         {label}
       </span>
-    </span>
+    </span></Localize>
   )
 }

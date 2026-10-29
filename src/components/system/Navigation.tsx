@@ -1,7 +1,9 @@
+import { Localize } from '../i18n/Localize'
 import { useEffect, useRef, useState } from 'react'
 import { useMediaQuery } from '../../hooks/useBrowserSignals'
 import { CloseIcon, MenuIcon, ReplayIcon } from '../ui/Icons'
 import { StatusBadge } from '../ui/StatusBadge'
+import { LanguageSwitcher } from '../i18n/LanguageSwitcher'
 
 const navItems = [
   { href: '#overview', label: 'Overview', index: '01' },
@@ -17,7 +19,7 @@ type NavigationProps = {
 
 export function Navigation({ onReplay }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const isMobile = useMediaQuery('(max-width: 900px)')
+  const isMobile = useMediaQuery('(max-width: 1100px)')
   const headerRef = useRef<HTMLElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
 
@@ -39,7 +41,7 @@ export function Navigation({ onReplay }: NavigationProps) {
   }
 
   return (
-    <header className="navigation" onKeyDown={(event) => {
+    <Localize><header className="navigation" onKeyDown={(event) => {
       if (event.key === 'Escape' && isOpen) {
         event.preventDefault()
         closeMenu()
@@ -98,12 +100,14 @@ export function Navigation({ onReplay }: NavigationProps) {
         </button>
       </nav>
 
+      <div className="navigation__tools"><LanguageSwitcher />
       <div className="navigation__status">
         <StatusBadge tone="online" pulse>
           System online
         </StatusBadge>
         <span className="navigation__clock">PORTFOLIO / LOCAL DEMO</span>
       </div>
-    </header>
+      </div>
+    </header></Localize>
   )
 }

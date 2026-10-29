@@ -1,3 +1,6 @@
+import { Localize } from '../i18n/Localize'
+import { useLocale } from '../../hooks/useLocale'
+import { translateText } from '../../lib/i18n'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 import { searchCommands, workspaceDefinitions } from '../../lib/commands'
@@ -17,12 +20,14 @@ type CommandPaletteProps = {
 }
 
 export function CommandPalette({ commands, shortcutModifier, showShortcuts, onExecute, onClose }: CommandPaletteProps) {
+  const { locale } = useLocale()
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<CommandCategory>()
   const [activeIndex, setActiveIndex] = useState(0)
   const [isHelpVisible, setHelpVisible] = useState(showShortcuts)
   const inputRef = useRef<HTMLInputElement>(null)
-  const results = useMemo(() => searchCommands(commands, query, category), [commands, query, category])
+  const localizedCommands = useMemo(() => commands.map((entry) => ({ ...entry, title: translateText(entry.title, locale), detail: translateText(entry.detail, locale), keywords: `${entry.keywords} ${entry.title} ${entry.detail} ${translateText(entry.category, locale)}` })), [commands, locale])
+  const results = useMemo(() => searchCommands(localizedCommands, query, category), [localizedCommands, query, category])
   const selectedIndex = Math.min(activeIndex, Math.max(0, results.length - 1))
   const selected = results[selectedIndex]
 
@@ -44,7 +49,7 @@ export function CommandPalette({ commands, shortcutModifier, showShortcuts, onEx
   }
 
   return (
-    <Modal className="command-palette" describedBy="command-palette-description" initialFocus={inputRef} labelledBy="command-palette-title" onClose={onClose}>
+    <Localize><Modal className="command-palette" describedBy="command-palette-description" initialFocus={inputRef} labelledBy="command-palette-title" onClose={onClose}>
       <header className="uplink-dialog__header">
         <div><CommandIcon /><span>Operator uplink <i /> <b>CONNECTED</b></span></div>
         <button aria-label="Close command palette" onClick={onClose} type="button"><CloseIcon /><kbd>Esc</kbd></button>
@@ -110,6 +115,6 @@ export function CommandPalette({ commands, shortcutModifier, showShortcuts, onEx
       {!results.length && <div className="command-palette__empty"><SearchIcon /><strong>No matching signals</strong><p>Try a unit ID like DR-41, a district name, or “share”.</p><button onClick={() => { setQuery(''); setCategory(undefined); setActiveIndex(0); inputRef.current?.focus() }} type="button">Clear search</button></div>}
 
       <footer className="command-palette__footer"><span><kbd>↑</kbd><kbd>↓</kbd> Navigate <kbd>Enter</kbd> Execute</span><button aria-expanded={isHelpVisible} onClick={() => setHelpVisible((current) => !current)} type="button">Keyboard shortcuts <kbd>?</kbd></button></footer>
-    </Modal>
+    </Modal></Localize>
   )
 }

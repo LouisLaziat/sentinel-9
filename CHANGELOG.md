@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.10.0 — Delivery 10: Citadel defense
+
+- Made a futuristic tower-defense theater the default Operations view, retaining the original map under Tactical grid.
+- Added a code-native isometric city, shielded Citadel, orbiting interceptors, incoming attack drones, homing shots, and localized effects.
+- Added five deterministic waves, shield-first damage, defense score, bounded event feed, and clear end states.
+- Added an EMP pulse with range/cooldown, pause, manual stepping, and restart controls.
+- Added two side-by-side Drone and Automatic tower cards with live remaining counts; removed the dropdown, Add button, and guard robot from this battle.
+- Made defender choices prominent with larger names/help, always-visible cyan/lime neon borders, and explicit click-to-choose prompts. Short phone labels preserve readability.
+- Swapped the city-status and defender-choice sections: a full-width city summary above the battlefield, with the chooser on its right; smaller screens keep choices above the map.
+- Added the complete French interface at `/fr`, an EN/FR header switch that preserves active state, French command search, localized canvas labels, and language-preserving scenario links.
+- Emitted `fr/index.html` with French metadata for direct static GitHub Pages navigation and refresh; English remains the default without browser-language overrides.
+- Added four glowing air circles for point-based drone placement and highlighted all 19 surrounding buildings for tower placement. Budgets remain three extra drones and four towers.
+- Added local drone patrols that stay inside their chosen air zone, automatic tower targeting, lime tracer fire, and per-battle reset of placed defenses.
+- Paused combat while choosing a position, added cancel/Escape, prevented overlapping drones and occupied rooftops, and returned keyboard focus after placement. Phone placement uses a contained, swipeable zoomed map.
+- Simplified instructions, defender counts, emergency-pulse help, and playback labels for non-technical visitors.
+- Suspended work outside the visible arena, during command/share dialogs, and in hidden tabs; respected motion preferences and OS reduced motion.
+- Added 35 model/deployment/placement/lifecycle tests and 15 localization tests, bringing the regression suite to 110 tests.
+
+No packages, hosted services, accounts, or telemetry integrations were added. Publication remains an owner action.
+
 ## 0.9.0 — Delivery 09: Portfolio launch
 
 - Reworked the README around the live demo, a short walkthrough, and real app media.

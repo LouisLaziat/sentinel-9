@@ -128,6 +128,15 @@ export function DroneIcon(props: IconProps) {
   )
 }
 
+export function TowerIcon(props: IconProps) {
+  return (
+    <IconBase {...props} stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round">
+      <path d="m4 16 8-3 8 3v5H4zM12 13V9M8 9h8V5H8zM16 5h6M16 8h6M8 5 5 3M8 18v3M16 18v3" />
+      <path d="M4 16h16" />
+    </IconBase>
+  )
+}
+
 export function RobotIcon(props: IconProps) {
   return (
     <IconBase {...props}>

@@ -1,25 +1,29 @@
 # Architecture
 
-SENTINEL//9 is a static React + TypeScript application. It uses native browser APIs, CSS animation, and SVG rather than a backend, a 3D engine, or a component framework. Vite builds the deployable assets; GitHub Actions verifies and publishes them to GitHub Pages.
+SENTINEL//9 is a static React + TypeScript application. It uses native browser APIs, CSS animation, SVG, and Canvas 2D rather than a backend, a 3D engine, or a component framework. Vite builds the deployable assets; GitHub Actions verifies and publishes them to GitHub Pages.
 
 ## Component and state boundaries
 
 ```text
-App
-├── shared preferences + OS motion + document visibility
-├── BootSequence / Navigation / Environment / CursorGlow
-├── design-system showcase
-└── WorkspaceBoundary → lazy CommandCenter
-    ├── simulation + fleet session + alert acknowledgement
-    ├── OperationsMap              workspace-local selection and filters
-    ├── lazy FleetSystems          controlled fleet session
-    ├── ThreatSimulation           controlled simulation state
-    ├── Situation / Signals / Systems
-    ├── CommandClock               isolated timer
-    └── CommandPalette / ScenarioShare → native Modal
+LocaleProvider                      explicit pathname + state-preserving EN/FR switch
+└── App
+    ├── shared preferences + OS motion + document visibility
+    ├── BootSequence / Navigation / Environment / CursorGlow
+    ├── design-system showcase
+    └── WorkspaceBoundary → lazy CommandCenter
+        ├── simulation + fleet session + alert acknowledgement
+        ├── OperationsMap              defense/grid mode, local selection and filters
+        │   └── DefenseTheater          isolated 30Hz canvas/model + 4Hz HUD
+        ├── lazy FleetSystems          controlled fleet session
+        ├── ThreatSimulation           controlled simulation state
+        ├── Situation / Signals / Systems
+        ├── CommandClock               isolated timer
+        └── CommandPalette / ScenarioShare → native Modal
 ```
 
-`src/lib` contains the data fixtures and pure interaction rules. Components display state and invoke those rules; they do not hide scoring or URL validation inside animation code. CSS files are organized by system/workspace, with `polish.css` loaded last for shared accessibility and responsive rules.
+`src/lib` contains the data fixtures and pure interaction rules. Components display state and invoke those rules; they do not hide scoring or URL validation inside animation code. CSS files are organized by system/workspace; `polish.css` supplies shared accessibility rules, followed by `i18n.css` for language-switcher and longer-label layout adjustments.
+
+English source copy and the French catalog share all behavioral models. React presentation wrappers localize text and accessible labels, not action IDs, controlled values, URLs, refs, or keys. Language changes therefore do not remount the active workspace. The build emits both English and French static entry files; see [localization](localization.md).
 
 ## State lifetime
 
@@ -30,6 +34,7 @@ App
 | Frame, slot, loadouts, staging, blueprint | CommandCenter | Preserved | Fixture defaults |
 | Alert acknowledgements | CommandCenter | Preserved | Fixture defaults |
 | Map filters, zoom, tracking, selection | OperationsMap | Workspace-local view remounts | Fixture defaults |
+| Citadel waves, enemies, shots, shields, score | DefenseTheater | New drill on re-entry; theater/grid toggle preserves it | Fresh drill |
 | Palette query and category | CommandPalette | Dialog-local | Reset |
 
 A validated scenario URL overrides a saved simulation. It carries only an incident and response team, never preferences, elapsed time, or an operator identity. Storage failure is nonfatal: the UI still works in memory.
@@ -41,6 +46,8 @@ The engine models `briefing → active ↔ paused → resolved/failed`. A reset 
 The score adds assigned-unit response strengths and a capability bonus, capped at 100. At the incident deadline, that score is compared with the scenario threshold. Route progress and threat level are derived from the same simulation time; animations visualize the model but do not decide the result. A 650ms interval advances one simulated second (approximately 1.5× time scale).
 
 This makes success and failure reproducible in tests, with no random outcomes or network timing. The scoring model is intentionally a portfolio demonstration, not a physical or safety-critical simulation.
+
+Delivery 10's [Citadel defense](citadel-defense.md) is a separate fixed-step model with entity movement, homing shots, damage, and pulse cooldowns. Two visible cards drive immutable point/rooftop placement actions: up to three reserve drones and four towers. `defense-city.ts` shares four air-zone circles and all 19 surrounding rooftops between the renderer, native placement targets, and model validation. Placed drones patrol near their selected points without leaving the circle; towers remain on the selected building. Canvas draws at up to 30Hz; its HUD updates independently at up to 4Hz. Choosing a position pauses combat until placement or cancellation, preserving an existing manual pause. Visibility and motion gates still apply. This does not change scenario sharing or the existing response engine.
 
 ## Loading, motion, and background work
 

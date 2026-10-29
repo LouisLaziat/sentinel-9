@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import { useMemo } from 'react'
 import type { CSSProperties, Dispatch, SetStateAction } from 'react'
 import {
@@ -54,7 +55,7 @@ export function ThreatSimulation({ simulation, setSimulation, onShare }: ThreatS
   }
 
   return (
-    <div className="command-view simulation-workspace">
+    <Localize><div className="command-view simulation-workspace">
       <div className="command-view__heading">
         <div><span>Deterministic response engine</span><h3>Threat simulation</h3></div>
         <div className="command-view__heading-status">
@@ -176,6 +177,6 @@ export function ThreatSimulation({ simulation, setSimulation, onShare }: ThreatS
           return <article className={isActive ? 'is-active' : ''} key={event.at}><time>{formatClock(event.at)}</time><i /><span>{event.code}</span><p>{event.text}</p></article>
         })}
       </div>
-    </div>
+    </div></Localize>
   )
 }

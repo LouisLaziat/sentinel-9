@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 
@@ -124,7 +125,7 @@ export function BootSequence({ onComplete, reducedMotion, visible }: BootSequenc
   }, [onComplete])
 
   return (
-    <section
+    <Localize><section
       aria-label="SENTINEL 9 network startup"
       aria-modal="true"
       className={`boot-sequence boot-sequence--stage-${stage}`}
@@ -282,6 +283,6 @@ export function BootSequence({ onComplete, reducedMotion, visible }: BootSequenc
       </footer>
 
       <div className="boot-sequence__exit" aria-hidden="true" />
-    </section>
+    </section></Localize>
   )
 }

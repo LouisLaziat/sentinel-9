@@ -5,7 +5,7 @@ import type { SimulationState } from './simulation'
 import type { PreferenceKey, Preferences } from './preferences'
 
 export const workspaceDefinitions = [
-  { id: 'operations', label: 'Operations', detail: 'City grid, districts, and live assets', keywords: 'map city drone robot patrol' },
+  { id: 'operations', label: 'Operations', detail: 'Citadel defense and tactical city inspection', keywords: 'tower citadel defense waves map city drone robot patrol' },
   { id: 'fleet', label: 'Fleet', detail: 'Hangar inspection and equipment loadouts', keywords: 'hangar equipment configure units' },
   { id: 'simulation', label: 'Simulation', detail: 'Threat scenarios and response dispatch', keywords: 'threat incident dispatch response' },
   { id: 'situation', label: 'Situation', detail: 'Metropolitan integrity and network topology', keywords: 'overview status topology health' },

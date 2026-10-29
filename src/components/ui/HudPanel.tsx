@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import type { ReactNode } from 'react'
 
 type PanelTone = 'default' | 'cyan' | 'warning' | 'critical'
@@ -20,7 +21,7 @@ export function HudPanel({
   tone = 'default',
 }: HudPanelProps) {
   return (
-    <article className={`hud-panel hud-panel--${tone} ${className}`.trim()}>
+    <Localize><article className={`hud-panel hud-panel--${tone} ${className}`.trim()}>
       <span className="hud-panel__notch" aria-hidden="true" />
       {eyebrow || title || meta ? (
         <header className="hud-panel__header">
@@ -32,6 +33,6 @@ export function HudPanel({
         </header>
       ) : null}
       <div className="hud-panel__content">{children}</div>
-    </article>
+    </article></Localize>
   )
 }

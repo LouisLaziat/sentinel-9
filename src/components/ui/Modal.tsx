@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import { useEffect, useRef } from 'react'
 import type { ReactNode, RefObject } from 'react'
 import { createPortal } from 'react-dom'
@@ -29,7 +30,7 @@ export function Modal({ children, className, labelledBy, describedBy, initialFoc
   }, [initialFocus])
 
   return createPortal(
-    <dialog
+    <Localize><dialog
       aria-describedby={describedBy}
       aria-labelledby={labelledBy}
       className={`uplink-dialog ${className}`}
@@ -40,7 +41,7 @@ export function Modal({ children, className, labelledBy, describedBy, initialFoc
         if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) onClose()
       }}
       ref={dialogRef}
-    >{children}</dialog>,
+    >{children}</dialog></Localize>,
     document.body,
   )
 }

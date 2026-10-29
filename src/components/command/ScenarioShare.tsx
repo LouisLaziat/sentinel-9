@@ -1,3 +1,6 @@
+import { Localize } from '../i18n/Localize'
+import { useLocale } from '../../hooks/useLocale'
+import { localeHref } from '../../lib/i18n'
 import { useMemo, useRef, useState } from 'react'
 import { createScenarioLink } from '../../lib/scenario-sharing'
 import { getResponseScore, getScenario, responseUnits } from '../../lib/simulation'
@@ -6,9 +9,10 @@ import { CloseIcon, LinkIcon, ShieldIcon } from '../ui/Icons'
 import { Modal } from '../ui/Modal'
 
 export function ScenarioShare({ simulation, onClose }: { simulation: SimulationState; onClose: () => void }) {
+  const { locale } = useLocale()
   const inputRef = useRef<HTMLInputElement>(null)
   const [copyState, setCopyState] = useState<'ready' | 'copied' | 'manual'>('ready')
-  const url = useMemo(() => createScenarioLink(window.location.href, simulation), [simulation])
+  const url = useMemo(() => createScenarioLink(new URL(localeHref(locale, import.meta.env.BASE_URL, window.location.search, window.location.hash), window.location.origin).href, simulation), [simulation, locale])
   const scenario = getScenario(simulation.scenarioId)
   const assigned = responseUnits.filter((unit) => simulation.assignedUnitIds.includes(unit.id))
   const score = getResponseScore(simulation)
@@ -25,7 +29,7 @@ export function ScenarioShare({ simulation, onClose }: { simulation: SimulationS
   }
 
   return (
-    <Modal className="scenario-share" labelledBy="scenario-share-title" describedBy="scenario-share-description" onClose={onClose}>
+    <Localize><Modal className="scenario-share" labelledBy="scenario-share-title" describedBy="scenario-share-description" onClose={onClose}>
       <header className="uplink-dialog__header"><div><LinkIcon /><span>Scenario uplink <i /><b>READY</b></span></div><button aria-label="Close scenario sharing" onClick={onClose} type="button"><CloseIcon /></button></header>
       <div className="scenario-share__body">
         <span className="uplink-eyebrow">SEND THE SAME CHALLENGE</span><h2 id="scenario-share-title">Share the response.</h2>
@@ -39,6 +43,6 @@ export function ScenarioShare({ simulation, onClose }: { simulation: SimulationS
         <button className="scenario-share__copy" onClick={copyLink} type="button"><LinkIcon />{copyState === 'copied' ? 'Link copied' : 'Copy scenario link'}</button>
         <p className="scenario-share__feedback" role="status">{copyState === 'copied' ? 'Copied. Paste the link anywhere you want to share this scenario.' : copyState === 'manual' ? 'Automatic copy is unavailable. The link is selected—press Ctrl+C or ⌘C to copy.' : 'The link contains only the incident and response team.'}</p>
       </div>
-    </Modal>
+    </Modal></Localize>
   )
 }

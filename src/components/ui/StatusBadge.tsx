@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import type { ReactNode } from 'react'
 
 type StatusTone = 'online' | 'warning' | 'critical' | 'neutral'
@@ -14,12 +15,12 @@ export function StatusBadge({
   tone = 'neutral',
 }: StatusBadgeProps) {
   return (
-    <span className={`status-badge status-badge--${tone}`}>
+    <Localize><span className={`status-badge status-badge--${tone}`}>
       <span
         className={`status-badge__signal${pulse ? ' status-badge__signal--pulse' : ''}`}
         aria-hidden="true"
       />
       {children}
-    </span>
+    </span></Localize>
   )
 }

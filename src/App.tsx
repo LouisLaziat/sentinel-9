@@ -1,3 +1,4 @@
+import { Localize } from './components/i18n/Localize'
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import { useMediaQuery, usePageVisibility } from './hooks/useBrowserSignals'
 import { loadPreferences } from './lib/preferences'
@@ -49,11 +50,11 @@ const alerts = [
 
 function SignalBars() {
   return (
-    <span className="signal-bars" aria-label="Signal strength: excellent">
+    <Localize><span className="signal-bars" aria-label="Signal strength: excellent">
       {[30, 52, 74, 100].map((height) => (
         <i key={height} style={{ height: `${height}%` }} />
       ))}
-    </span>
+    </span></Localize>
   )
 }
 
@@ -104,7 +105,7 @@ export function App() {
   }, [])
 
   return (
-    <>
+    <Localize><>
       {isBooting && <BootSequence onComplete={completeBoot} reducedMotion={!motionEnabled} visible={pageVisible} />}
 
       <div className="app-shell" aria-hidden={isBooting} inert={isBooting}>
@@ -277,6 +278,6 @@ export function App() {
         </div>
       </footer>
       </div>
-    </>
+    </></Localize>
   )
 }

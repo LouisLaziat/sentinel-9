@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import { createSparkline } from '../../lib/telemetry'
 
 type TelemetryTone = 'lime' | 'cyan' | 'violet' | 'warning'
@@ -20,7 +21,7 @@ export function TelemetryCard({
   value,
 }: TelemetryCardProps) {
   return (
-    <article className={`telemetry-card telemetry-card--${tone}`}>
+    <Localize><article className={`telemetry-card telemetry-card--${tone}`}>
       <div className="telemetry-card__topline">
         <span>{label}</span>
         <span className="telemetry-card__change">{change}</span>
@@ -37,6 +38,6 @@ export function TelemetryCard({
       >
         <polyline points={createSparkline(points)} vectorEffect="non-scaling-stroke" />
       </svg>
-    </article>
+    </article></Localize>
   )
 }

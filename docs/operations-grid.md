@@ -2,6 +2,8 @@
 
 Delivery 04 adds a spatial command surface to SENTINEL//9. The Operations workspace is the default command-center view and turns the fictional megacity into an explorable system of districts, autonomous units, routes, and threats.
 
+Delivery 10 adds [Citadel defense](citadel-defense.md) as the default Operations view. Select **Tactical grid** to access the inspection controls described below. Command-palette district/unit inspection opens Tactical grid directly.
+
 ## Map interaction
 
 - Select any district to inspect integrity, population, defense coverage, and assigned assets.
@@ -28,4 +30,4 @@ The district, unit, threat, and activity records are intentionally local fixture
 
 ## Delivery boundary
 
-This delivery provides selection, filtering, inspection, and visual tracking. Units do not yet move through a time-based simulation, and dispatch controls do not mutate the scenario. Those behaviors belong to the later threat-simulation delivery.
+The original tactical grid provides selection, filtering, inspection, and visual tracking with fixture-based markers. Moving combat is now available separately in Citadel defense; the Simulation workspace provides the scenario/team response model. Neither mode mutates the tactical district fixtures.

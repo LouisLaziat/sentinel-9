@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import { useMemo, useState } from 'react'
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent } from 'react'
 import { isUnitVisible, stepMapZoom } from '../../lib/operations'
@@ -14,6 +15,7 @@ import {
   ShieldIcon,
 } from '../ui/Icons'
 import { StatusBadge } from '../ui/StatusBadge'
+import { DefenseTheater } from './DefenseTheater'
 
 type Threat = {
   id: string
@@ -44,7 +46,8 @@ function handleActivation(event: ReactKeyboardEvent<SVGGElement>, action: () => 
   }
 }
 
-export function OperationsMap({ initialSelection }: { initialSelection?: OperationsSelection }) {
+export function OperationsMap({ initialSelection, enabled = true, motion = true }: { initialSelection?: OperationsSelection; enabled?: boolean; motion?: boolean }) {
+  const [mode, setMode] = useState<'defense' | 'grid'>(initialSelection ? 'grid' : 'defense')
   const initialUnit = units.find((unit) => unit.id === (initialSelection?.kind === 'unit' ? initialSelection.id : 'DR-09'))
   const [selectedDistrictId, setSelectedDistrictId] = useState(initialSelection?.kind === 'district' ? initialSelection.id : initialUnit?.districtId ?? 'civic-core')
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(initialSelection?.kind === 'district' ? null : initialUnit?.id ?? null)
@@ -84,11 +87,18 @@ export function OperationsMap({ initialSelection }: { initialSelection?: Operati
   }
 
   return (
-    <div className="command-view operations-workspace">
+    <Localize><div className="command-view operations-workspace">
       <div className="command-view__heading">
-        <div><span>Live city operations</span><h3>Metropolitan grid</h3></div>
-        <div className="command-view__heading-status"><StatusBadge tone="online" pulse>24 sectors connected</StatusBadge><span>MAP / NEO-TORONTO / 09</span></div>
+        <div><span>Live city operations</span><h3>{mode === 'defense' ? 'Citadel defense' : 'Metropolitan grid'}</h3></div>
+        <div className="command-view__heading-status"><StatusBadge tone="online" pulse>24 sectors connected</StatusBadge><span>NEO-TORONTO / C-12</span></div>
       </div>
+
+      <div className="operations-view-switch" role="group" aria-label="Operations view">
+        <button aria-pressed={mode === 'defense'} onClick={() => setMode('defense')} type="button"><ShieldIcon />Defense theater<span>01 / AUTO</span></button>
+        <button aria-pressed={mode === 'grid'} onClick={() => setMode('grid')} type="button"><MapIcon />Tactical grid<span>02 / INSPECT</span></button>
+      </div>
+      <div hidden={mode !== 'defense'}><DefenseTheater enabled={enabled && mode === 'defense'} motion={motion} /></div>
+      <div hidden={mode !== 'grid'}>
 
       <div className="operations-toolbar">
         <div className="operations-toolbar__mode"><MapIcon /><span>Operations layer</span><strong>LIVE</strong></div>
@@ -257,6 +267,7 @@ export function OperationsMap({ initialSelection }: { initialSelection?: Operati
         <div className="operations-feed__title"><ShieldIcon /><span>Operations stream</span><strong>LIVE</strong></div>
         {activity.map((event) => <article key={event.time}><time>{event.time}</time><StatusBadge tone={event.tone}>{event.code}</StatusBadge><p>{event.text}</p></article>)}
       </div>
-    </div>
+      </div>
+    </div></Localize>
   )
 }

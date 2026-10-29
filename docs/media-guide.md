@@ -1,6 +1,6 @@
 # Demo media
 
-All committed images are actual local app captures. The demo GIF uses captured interaction states with edited playback timing; it is not a real-time benchmark. No AI-generated artwork, paid asset, external font, or stock-image download was introduced in Delivery 09.
+All committed images are actual local app captures. The demo GIF uses captured Delivery 09 interaction states with edited playback timing; it is not a real-time benchmark. Delivery 10's defense screenshot shows the newer default Operations view. No AI-generated artwork, paid asset, external font, or stock-image download was introduced in either delivery.
 
 ## Included assets
 
@@ -8,6 +8,8 @@ All committed images are actual local app captures. The demo GIF uses captured i
 | --- | --- |
 | `docs/media/overview.jpg` | README first impression |
 | `docs/media/operations.jpg` | District inspection and city controls |
+| `docs/media/defense.jpg` | Delivery 10 Operations theater with city status above, defender choices beside the map, and glowing placement zones |
+| `docs/media/defense-fr.jpg` | Complete French Operations interface with larger glowing defender cards |
 | `docs/media/fleet.jpg` | Configurable machine / equipment view |
 | `docs/media/simulation.jpg` | Paused tactical response |
 | `docs/media/mobile.jpg` | Narrow-screen layout |
@@ -20,7 +22,7 @@ JPEG screenshots remain below 1MB each, the social preview below 500kB, and the 
 
 1. Start the app and finish or skip startup. Use default motion/precision settings for the standard media set.
 2. Capture the overview with the Decisions title and cyan network signal visible.
-3. In Operations, choose a district and include both the map and inspector.
+3. In Operations, pause Defense theater and select a Drone or Automatic tower card with enemies present. Include both visible cards and the glowing circles/buildings. Place a defender before repeating the capture if desired. Switch to Tactical grid, choose a district, and include both the map and inspector for the original map shot.
 4. In Fleet, choose a frame and expose the loadout panel; avoid a pending transition.
 5. In Simulation, use Rogue swarm with its recommended team, launch, pause, and use manual stepping to expose movement. Reset after capture.
 6. Capture a phone-sized layout and check that the title and navigation are not clipped.

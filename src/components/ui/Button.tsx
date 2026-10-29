@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import type { ReactNode } from 'react'
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
@@ -32,15 +33,15 @@ export function Button({
 
   if (href) {
     return (
-      <a className={classes} href={href} onClick={onClick}>
+      <Localize><a className={classes} href={href} onClick={onClick}>
         {content}
-      </a>
+      </a></Localize>
     )
   }
 
   return (
-    <button className={classes} onClick={onClick} type="button">
+    <Localize><button className={classes} onClick={onClick} type="button">
       {content}
-    </button>
+    </button></Localize>
   )
 }

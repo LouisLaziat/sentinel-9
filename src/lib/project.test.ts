@@ -9,9 +9,9 @@ describe('portfolio release metadata', () => {
     expect(project.build).toBe(version.split('.').map((part) => part.padStart(2, '0')).join('.'))
   })
 
-  it('identifies the portfolio launch and public author', () => {
-    expect(project.delivery).toBe('09')
-    expect(project.phase).toBe('Portfolio launch')
+  it('identifies the current delivery and public author', () => {
+    expect(project.delivery).toBe('10')
+    expect(project.phase).toBe('Citadel defense')
     expect(project.author).toBe('Louis Ho')
     expect(Object.isFrozen(project)).toBe(true)
   })

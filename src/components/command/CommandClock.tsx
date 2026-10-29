@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import { useEffect, useState } from 'react'
 import { usePageVisibility } from '../../hooks/useBrowserSignals'
 
@@ -12,8 +13,8 @@ export function CommandClock({ enabled }: { enabled: boolean }) {
   }, [enabled, visible])
 
   return (
-    <time className="command-topbar__clock" dateTime={clock.toISOString()} aria-label={`Local time ${clock.toLocaleTimeString('en-CA', { hour12: false })}`}>
+    <Localize><time className="command-topbar__clock" dateTime={clock.toISOString()} aria-label={`Local time ${clock.toLocaleTimeString('en-CA', { hour12: false })}`}>
       {clock.toLocaleTimeString('en-CA', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}<small>LOCAL</small>
-    </time>
+    </time></Localize>
   )
 }

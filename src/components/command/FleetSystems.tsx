@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import { useId, useMemo } from 'react'
 import type { CSSProperties, Dispatch, SetStateAction } from 'react'
 import { calculateFleetStats, fleetModules, getModule } from '../../lib/fleet'
@@ -14,7 +15,7 @@ const slotLabels = { sensor: 'Sensor array', core: 'Power core', utility: 'Utili
 
 function UnitSilhouette({ kind }: { kind: FleetUnit['kind'] }) {
   return (
-    <svg className={`fleet-silhouette fleet-silhouette--${kind}`} viewBox="0 0 540 320" aria-hidden="true">
+    <Localize><svg className={`fleet-silhouette fleet-silhouette--${kind}`} viewBox="0 0 540 320" aria-hidden="true">
       <defs>
         <linearGradient id="fleet-shell" x1="0" y1="0" x2="1" y2="1"><stop stopColor="currentColor" stopOpacity=".23" /><stop offset="1" stopColor="currentColor" stopOpacity=".03" /></linearGradient>
         <filter id="fleet-glow"><feGaussianBlur stdDeviation="4" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
@@ -35,7 +36,7 @@ function UnitSilhouette({ kind }: { kind: FleetUnit['kind'] }) {
           <circle cx="270" cy="137" r="14" /><circle cx="270" cy="137" r="5" />
         </g>
       )}
-    </svg>
+    </svg></Localize>
   )
 }
 
@@ -59,7 +60,7 @@ export function FleetSystems({ session, onChange }: { session: FleetSession; onC
   }
 
   return (
-    <div className="command-view fleet-workspace">
+    <Localize><div className="command-view fleet-workspace">
       <div className="command-view__heading">
         <div><span>Autonomous fleet systems</span><h3>Hangar control</h3></div>
         <div className="command-view__heading-status"><StatusBadge tone="online" pulse>128 units linked</StatusBadge><span>HANGAR / DECK 09</span></div>
@@ -152,6 +153,6 @@ export function FleetSystems({ session, onChange }: { session: FleetSession; onC
           </button>
         </aside>
       </div>
-    </div>
+    </div></Localize>
   )
 }

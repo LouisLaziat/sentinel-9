@@ -1,3 +1,4 @@
+import { Localize } from '../i18n/Localize'
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import type { CSSProperties } from 'react'
 import {
@@ -114,7 +115,7 @@ function loadCommandSession() {
 
 function SituationWorkspace({ openAlerts }: { openAlerts: number }) {
   return (
-    <div className="command-view command-view--situation">
+    <Localize><div className="command-view command-view--situation">
       <div className="command-view__heading">
         <div>
           <span>Live operational picture</span>
@@ -178,7 +179,7 @@ function SituationWorkspace({ openAlerts }: { openAlerts: number }) {
           <div className="district-panel__footer"><BoltIcon /><span>Predictive coverage</span><strong>97.2%</strong></div>
         </aside>
       </div>
-    </div>
+    </div></Localize>
   )
 }
 
@@ -186,7 +187,7 @@ function SignalsWorkspace({ acknowledged, onAcknowledge }: { acknowledged: strin
   const openAlerts = alerts.filter((alert) => !acknowledged.includes(alert.id))
 
   return (
-    <div className="command-view command-view--signals">
+    <Localize><div className="command-view command-view--signals">
       <div className="command-view__heading">
         <div><span>Network event triage</span><h3>Signal intelligence</h3></div>
         <div className="command-view__heading-status"><StatusBadge tone={openAlerts.length ? 'warning' : 'online'}>{openAlerts.length} awaiting review</StatusBadge><span>AUTO-SORT / SEVERITY</span></div>
@@ -215,7 +216,7 @@ function SignalsWorkspace({ acknowledged, onAcknowledge }: { acknowledged: strin
           <dl><div><dt>Confidence</dt><dd>94.7%</dd></div><div><dt>Sources</dt><dd>38</dd></div><div><dt>Noise floor</dt><dd>−82 dB</dd></div></dl>
         </aside>
       </div>
-    </div>
+    </div></Localize>
   )
 }
 
@@ -227,7 +228,7 @@ function SystemsWorkspace({ preferences, onToggle }: { preferences: Preferences;
   ]
 
   return (
-    <div className="command-view command-view--systems">
+    <Localize><div className="command-view command-view--systems">
       <div className="command-view__heading">
         <div><span>Operator configuration</span><h3>System preferences</h3></div>
         <div className="command-view__heading-status"><StatusBadge tone="online">Profile synchronized</StatusBadge><span>OP-074 / LOCAL</span></div>
@@ -254,7 +255,7 @@ function SystemsWorkspace({ preferences, onToggle }: { preferences: Preferences;
           <StatusBadge tone="online" pulse>Authenticated</StatusBadge>
         </aside>
       </div>
-    </div>
+    </div></Localize>
   )
 }
 
@@ -308,7 +309,8 @@ export function CommandCenter({ enabled = true, preferences, onTogglePreference 
     setPaletteOpen(true)
   }, [])
 
-  const navigateWorkspace = useCallback((next: Workspace) => {
+  const navigateWorkspace = useCallback((next: Workspace, preserveInspection = false) => {
+    if (next === 'operations' && !preserveInspection) setOperationsSelection(undefined)
     setWorkspace(next)
     window.requestAnimationFrame(() => {
       document.getElementById('command')?.scrollIntoView({ block: 'start', behavior: 'instant' })
@@ -353,7 +355,7 @@ export function CommandCenter({ enabled = true, preferences, onTogglePreference 
       case 'unit':
         setOperationsSelection({ kind: action.type, id: action.id })
         setSelectionVersion((current) => current + 1)
-        navigateWorkspace('operations')
+        navigateWorkspace('operations', true)
         break
       case 'fleet-unit':
         setFleetSession((current) => ({ ...current, selectedUnitId: action.id }))
@@ -379,12 +381,12 @@ export function CommandCenter({ enabled = true, preferences, onTogglePreference 
   }
 
   return (
-    <div className={`command-shell${preferences.environmentalMotion ? '' : ' command-shell--calm'}${preferences.tacticalContrast ? ' command-shell--contrast' : ''}`}>
+    <Localize><div className={`command-shell${preferences.environmentalMotion ? '' : ' command-shell--calm'}${preferences.tacticalContrast ? ' command-shell--contrast' : ''}`}>
       <aside className="command-sidebar">
         <div className="command-sidebar__brand"><span>S9</span><div><strong>COMMAND</strong><small>CORE / {project.delivery}</small></div></div>
         <nav aria-label="Command center workspaces">
           {workspaceItems.map((item, index) => (
-            <button aria-current={workspace === item.id ? 'page' : undefined} className={workspace === item.id ? 'is-active' : ''} key={item.id} onClick={() => setWorkspace(item.id)} type="button">
+            <button aria-current={workspace === item.id ? 'page' : undefined} className={workspace === item.id ? 'is-active' : ''} key={item.id} onClick={() => { if (item.id === 'operations') setOperationsSelection(undefined); setWorkspace(item.id) }} type="button">
               <i>{item.icon}</i><span>{item.label}</span><small>0{index + 1}</small>
               {item.id === 'signals' && openAlerts > 0 && <b aria-label={`${openAlerts} open alerts`}>{openAlerts}</b>}
             </button>
@@ -405,7 +407,7 @@ export function CommandCenter({ enabled = true, preferences, onTogglePreference 
         </header>
 
         <div aria-label={`${workspace} workspace`} className="command-console__viewport" id="command-workspace" key={`${workspace}-${selectionVersion}`} tabIndex={-1}>
-          {workspace === 'operations' && <OperationsMap initialSelection={operationsSelection} />}
+          {workspace === 'operations' && <OperationsMap enabled={enabled && !isPaletteOpen && !shareSnapshot} initialSelection={operationsSelection} motion={preferences.environmentalMotion} />}
           {workspace === 'fleet' && <Suspense fallback={<div className="workspace-loading"><LoadingIndicator label="Connecting hangar systems" /></div>}><FleetSystems onChange={setFleetSession} session={fleetSession} /></Suspense>}
           {workspace === 'simulation' && <ThreatSimulation onShare={() => setShareSnapshot(simulation)} setSimulation={setSimulation} simulation={simulation} />}
           {workspace === 'situation' && <SituationWorkspace openAlerts={openAlerts} />}
@@ -425,6 +427,6 @@ export function CommandCenter({ enabled = true, preferences, onTogglePreference 
       {notice && <div className="command-notice" role="status"><CommandIcon /><span>{notice}</span><button aria-label="Dismiss command notification" onClick={() => setNotice('')} type="button"><CloseIcon /></button></div>}
       {enabled && isPaletteOpen && <CommandPalette commands={commands} onClose={() => setPaletteOpen(false)} onExecute={executeCommand} shortcutModifier={shortcutModifier} showShortcuts={showShortcuts} />}
       {enabled && shareSnapshot && <ScenarioShare onClose={() => setShareSnapshot(null)} simulation={shareSnapshot} />}
-    </div>
+    </div></Localize>
   )
 }
